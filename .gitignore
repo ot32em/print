@@ -29,3 +29,6 @@
 
 # CMake middle files
 build/
+
+# Vi tmp
+*.swp
