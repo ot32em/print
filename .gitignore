@@ -26,3 +26,6 @@
 *.exe
 *.out
 *.app
+
+# CMake middle files
+build/
