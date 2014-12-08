@@ -8,20 +8,14 @@ go_bandit([](){
         it("counts msg length", [&]()
         {
             static_assert(
-                std::integral_constant<
-                    unsigned int,
-                    cstr("Hello world.").length()
-                >::value == 12, 
+                cstr("Hello world.").length() == 12, 
                 "msg's length should be 8.");
         });
         it("counts symbol count", [&]()
         {
             static_assert(
-                std::integral_constant<
-                    unsigned int,
-                    char_count(cstr("Hello %"), '%')
-                >::value == 1 ,
-                "msg should haveone #.");
+                char_count(cstr("Hello %"), '%') == 1 ,
+                "msg should have one #.");
         });
     });
 });
