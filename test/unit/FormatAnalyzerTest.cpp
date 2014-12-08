@@ -10,16 +10,18 @@ go_bandit([](){
             static_assert(
                 std::integral_constant<
                     unsigned int,
-                    CStr("Hello world.").length()>::value == 12, 
-                    "Its length should be 8.");
+                    cstr("Hello world.").length()
+                >::value == 12, 
+                "msg's length should be 8.");
         });
-        it("counts symbaol count", [&]()
+        it("counts symbol count", [&]()
         {
             static_assert(
                 std::integral_constant<
                     unsigned int,
-                    char_count(CStr("Hello %"), '%')
-                    >::value == 1 , "msg has one #.");
+                    char_count(cstr("Hello %"), '%')
+                >::value == 1 ,
+                "msg should haveone #.");
         });
     });
 });

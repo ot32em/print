@@ -1,9 +1,9 @@
 #include <stdexcept>
 
-class CStr
+class cstr
 {public:
     template<unsigned int N>
-    constexpr CStr(const char (&str)[N]) :length_(N-1), pstr_(str) {} 
+    constexpr cstr(const char (&str)[N]) :length_(N-1), pstr_(str) {} 
 
     constexpr unsigned int length() const { return length_; }
     constexpr char operator[](int i) const { 
@@ -15,7 +15,7 @@ private:
 };
 
 
-constexpr unsigned int char_count(CStr str, char c, unsigned int i=0) 
+constexpr unsigned int char_count(cstr str, char c, unsigned int i=0) 
 {
     return 
         i == str.length()? 
@@ -25,7 +25,7 @@ constexpr unsigned int char_count(CStr str, char c, unsigned int i=0)
                 0 + char_count(str, c, i+1);
 }
 
-constexpr unsigned int percent_count(CStr str, unsigned int i=0) 
+constexpr unsigned int percent_count(cstr str, unsigned int i=0) 
 {
     return char_count(str, '%', i);
 }
