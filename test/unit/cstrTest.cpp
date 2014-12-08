@@ -1,5 +1,5 @@
 #include "bandit/bandit.h"
-#include "FormatAnalyzer.h"
+#include "cstr.h"
 
 using namespace bandit;
 
