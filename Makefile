@@ -12,7 +12,7 @@ TEST_BIN_PATH=$(TEST_BIN_DIR)/$(TEST_BIN)
 TEST_SRC_DIR=test
 TEST_RUNNER=$(TEST_SRC_DIR)/runner.cpp
 BTEST_SRC=$(wildcard $(TEST_SRC_DIR)/functional/*Test.cpp) $(TEST_RUNNER)
-UTEST_SRC=$(widlcard $(TEST_SRC_DIR)/unit/*Test.cpp) $(TEST_RUNNER)
+UTEST_SRC=$(wildcard $(TEST_SRC_DIR)/unit/*Test.cpp) $(TEST_RUNNER)
 
 all:
 
