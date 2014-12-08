@@ -4,17 +4,22 @@
 using namespace bandit;
 
 go_bandit([](){
-    describe("FormatAnalyzer"), [](){
-        it("counts how many args in msg format", []()
+    describe("Compile Time String", [](){
+        it("counts msg length", [&]()
         {
-            describe("1-arg format message", []()
-            {
-                it("should counts 1", [&]()
-                {
-                    FormatAnalyzer fa("Hello %.");
-                    static_assert(fa.args_count() == 1);
-                }
-            });
+            static_assert(
+                std::integral_constant<
+                    unsigned int,
+                    CStr("Hello world.").length()>::value == 12, 
+                    "Its length should be 8.");
+        });
+        it("counts symbaol count", [&]()
+        {
+            static_assert(
+                std::integral_constant<
+                    unsigned int,
+                    char_count(CStr("Hello %"), '%')
+                    >::value == 1 , "msg has one #.");
         });
     });
 });
