@@ -16,15 +16,19 @@ UTEST_SRC=$(wildcard $(TEST_SRC_DIR)/unit/*Test.cpp) $(TEST_RUNNER)
 
 all:
 
+test: btest utest
+
 btest: btest_only test_clean
 
 btest_only: test_env
+	$(info Running Behavior Tests.)
 	@$(TEST_CC) $(TEST_INCLUDE) $(BTEST_SRC) -o $(TEST_BIN_PATH)
 	@./$(TEST_BIN_PATH)
 
 utest: utest_only test_clean
 
 utest_only: test_env
+	$(info Running Unit Tests.)
 	@$(TEST_CC) $(TEST_INCLUDE) $(UTEST_SRC) -o $(TEST_BIN_PATH)
 	@./$(TEST_BIN_PATH)
 
@@ -33,3 +37,5 @@ test_env:
 
 test_clean:
 	@rm -rf $(TEST_BIN_DIR)
+
+clean: test_clean
