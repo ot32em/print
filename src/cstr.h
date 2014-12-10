@@ -74,5 +74,5 @@ int_arg_seq(cstr str, char escape='%')
 constexpr unsigned long long 
 float_arg_seq(cstr str, char escape='%')
 {
-    return 0; //arg_seq(str, escape, 'd');
+    return arg_seq(str, escape, 'f');
 }
