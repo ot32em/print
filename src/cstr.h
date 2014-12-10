@@ -52,3 +52,9 @@ constexpr unsigned long long arg_seq(cstr str, char escape='#', unsigned int cou
                         nth_bit(count_arg) | arg_seq(str, escape, count_arg + 1, i+1);
 }
 
+constexpr unsigned long long str_arg_seq(
+    cstr str, char escape='#', unsigned int count_arg = 0, unsigned int i = 0)
+{
+    return 0;
+}
+

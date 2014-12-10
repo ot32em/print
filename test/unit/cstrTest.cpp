@@ -45,6 +45,29 @@ go_bandit([](){
                 "should return (1111) to represent 4 args");
             });
         });
+
+        describe("str args sequence", []()
+        {
+            it("has 0 str", []()
+            {
+                static_assert(str_arg_seq(cstr("%d %d %d %d")) == 1,
+                    "should return 0000 to represent 0 str");
+            });
+            it("has 1 str", []()
+            {
+                static_assert(str_arg_seq(cstr("%s %d %d %d")) == 1,
+                    "should return 0001 to represent 1 str at 1th arg");
+
+                static_assert(str_arg_seq(cstr("%d %s %d %d")) == 2,
+                    "should return 0010 to represent 1 str at 2th arg");
+
+                static_assert(str_arg_seq(cstr("%s %d %d %d")) == 4,
+                    "should return 0100 to represent 1 str at 3th arg");
+
+                static_assert(str_arg_seq(cstr("%s %d %d %d")) == 8,
+                    "should return 1000 to represent 1 str at 4th arg");
+            });
+        });
     });
     describe("compile time bit helper", []()
     {
