@@ -35,7 +35,8 @@ constexpr unsigned long long nth_bit(unsigned char n)
     return n? 1 << (n - 1): 0;
 }
 
-constexpr unsigned long long arg_seq(cstr str, char escape='#', unsigned int count_arg = 0, unsigned int i=0)
+constexpr unsigned long long arg_seq(
+    cstr str, char escape='%', char id='%', unsigned int count_arg = 0, unsigned int i=0)
 {
     /****
      *   Hello %s, I'm %s. I have 23.0%% fat rate.
@@ -44,12 +45,18 @@ constexpr unsigned long long arg_seq(cstr str, char escape='#', unsigned int cou
     return i >= str.length()?
             0:
             str[i] != escape?
-                arg_seq(str, escape, count_arg, i+1): // non % case, advance to next i.
+                arg_seq(str, escape, id, count_arg, i+1): // non % case, advance to next i.
                 i + 1 >= str.length()?
-                    arg_seq(str, escape, count_arg, i+1): // only one % at tail.
+                    arg_seq(str, escape, id, count_arg, i+1): // only one % at tail.
                     str[i + 1] == escape?
-                        nth_bit(1+count_arg) | arg_seq(str, escape, count_arg + 1, i+2):
-                        nth_bit(1+count_arg) | arg_seq(str, escape, count_arg + 1, i+1);
+                        arg_seq(str, escape, id, count_arg + 1, i+2):
+                        id == escape? (
+                            nth_bit(1+count_arg) | arg_seq(str, escape, id, count_arg + 1, i+2)
+                        ):(
+                            str[i+1] == id?
+                                nth_bit(1+count_arg) | arg_seq(str, escape, id, count_arg + 1, i+2):
+                                arg_seq(str, escape, id, count_arg + 1, i+1) // bypass unknown arg id
+                        );
 }
 
 
@@ -57,17 +64,6 @@ constexpr char arg_str_sym(){return 's';}
 constexpr unsigned long long str_arg_seq(
     cstr str, char escape='%', unsigned int count_arg = 0, unsigned int i = 0)
 {
-    // char str symbol = s
-    return i >= str.length()?
-            0:
-            str[i] != escape?
-                str_arg_seq(str, escape, count_arg, i+1): // non % case, advance to next i.
-                i + 1 >= str.length()?
-                    nth_bit(1+count_arg) | str_arg_seq(str, escape, count_arg + 1, i+1): // only one % at tail.
-                    str[i+1] == escape?
-                        str_arg_seq(str, escape, count_arg + 1, i+2):
-                        str[i+1] == 's'?
-                            nth_bit(1 + count_arg) | str_arg_seq(str, escape, count_arg + 1, i+2):
-                            str_arg_seq(str, escape, count_arg + 1, i+1); // bypass unknown arg id
+    return arg_seq(str, escape, 's');
 }
 
