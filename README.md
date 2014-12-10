@@ -22,3 +22,7 @@ My cat is named Nini. Nini is 5 years old. eat 3.14 pounds food per day.
     > write stream to OutputDebugString(Windows only)
  
   - Need implement a basic_streambuf.
+
+## Limitation
+  
+  - msg must be a string literal for compile-time arguments amount and type checking.
