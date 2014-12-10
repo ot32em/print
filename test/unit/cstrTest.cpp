@@ -50,7 +50,7 @@ go_bandit([](){
         {
             it("has 0 str", []()
             {
-                static_assert(str_arg_seq(cstr("%d %d %d %d")) == 1,
+                static_assert(str_arg_seq(cstr("%d %d %d %d")) == 0,
                     "should return 0000 to represent 0 str");
             });
             it("has 1 str", []()
@@ -61,10 +61,10 @@ go_bandit([](){
                 static_assert(str_arg_seq(cstr("%d %s %d %d")) == 2,
                     "should return 0010 to represent 1 str at 2th arg");
 
-                static_assert(str_arg_seq(cstr("%s %d %d %d")) == 4,
+                static_assert(str_arg_seq(cstr("%d %d %s %d")) == 4,
                     "should return 0100 to represent 1 str at 3th arg");
 
-                static_assert(str_arg_seq(cstr("%s %d %d %d")) == 8,
+                static_assert(str_arg_seq(cstr("%d %d %d %s")) == 8,
                     "should return 1000 to represent 1 str at 4th arg");
             });
         });

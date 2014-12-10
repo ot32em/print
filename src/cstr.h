@@ -52,9 +52,22 @@ constexpr unsigned long long arg_seq(cstr str, char escape='#', unsigned int cou
                         nth_bit(1+count_arg) | arg_seq(str, escape, count_arg + 1, i+1);
 }
 
+
+constexpr char arg_str_sym(){return 's';}
 constexpr unsigned long long str_arg_seq(
-    cstr str, char escape='#', unsigned int count_arg = 0, unsigned int i = 0)
+    cstr str, char escape='%', unsigned int count_arg = 0, unsigned int i = 0)
 {
-    return 0;
+    // char str symbol = s
+    return i >= str.length()?
+            0:
+            str[i] != escape?
+                str_arg_seq(str, escape, count_arg, i+1): // non % case, advance to next i.
+                i + 1 >= str.length()?
+                    nth_bit(1+count_arg) | str_arg_seq(str, escape, count_arg + 1, i+1): // only one % at tail.
+                    str[i+1] == escape?
+                        str_arg_seq(str, escape, count_arg + 1, i+2):
+                        str[i+1] == 's'?
+                            nth_bit(1 + count_arg) | str_arg_seq(str, escape, count_arg + 1, i+2):
+                            str_arg_seq(str, escape, count_arg + 1, i+1); // bypass unknown arg id
 }
 
