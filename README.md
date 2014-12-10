@@ -11,7 +11,7 @@
 [ ] `print::d` - A `print::f` with pure result message to `OutputDebugString`. Very usefull for Windows Developing.
 > `print::d(const char* msg, ...)`
 
-## Sample Usage
+## Usage
 
 ``` cpp
 print::f(std::cout, "My cat is named %s. %s is %d years old." 
@@ -77,3 +77,20 @@ print::d("[Log] name: %s, age: %d, fat rate: %f\n",
     print::c(std::string("Herher! %s!"), "HAHA"); // gg
 
     ```
+
+## Run Test
+
+``` bash run behavior tests
+/path/to/print_root> $ make btest 
+```
+
+``` bash run unit tests
+/path/to/print_root> $ make utest 
+```
+
+## exp zone
+
+``` bash
+/path/to/print_root> $ vi src/exp.cpp
+/path/to/print_root> $ make exp
+```
