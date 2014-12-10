@@ -75,6 +75,21 @@ go_bandit([](){
             static_assert(int_arg_seq(cstr("%s %s %s %d")) == 8, "");
             static_assert(int_arg_seq(cstr("%s %s %s %s")) == 0, "");
         });
+
+        describe("float args sequence", []()
+        {
+            static_assert(float_arg_seq(cstr("%s %f %f %f")) == 2 + 4 + 8, "");
+            static_assert(float_arg_seq(cstr("%f %s %f %f")) == 1 + 4 + 8, "");
+            static_assert(float_arg_seq(cstr("%f %f %s %f")) == 1 + 2 + 8, "");
+            static_assert(float_arg_seq(cstr("%f %f %f %s")) == 1 + 2 + 4, "");
+            static_assert(float_arg_seq(cstr("%s %s %f %f")) == 4 + 8, "");
+            static_assert(float_arg_seq(cstr("%s %f %s %f")) == 2 + 8, "");
+            static_assert(float_arg_seq(cstr("%s %f %f %s")) == 2 + 4, "");
+            static_assert(float_arg_seq(cstr("%f %s %s %f")) == 1 + 8, "");
+            static_assert(float_arg_seq(cstr("%f %s %f %s")) == 1 + 4, "");
+            static_assert(float_arg_seq(cstr("%s %s %s %f")) == 8, "");
+            static_assert(float_arg_seq(cstr("%s %s %s %s")) == 0, "");
+        });
     });
     describe("compile time bit helper", []()
     {
