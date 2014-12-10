@@ -29,3 +29,8 @@ constexpr unsigned int percent_count(cstr str, unsigned int i=0)
 {
     return char_count(str, '%', i);
 }
+
+constexpr unsigned long long arg_seq(cstr str, char escape='#')
+{
+    return 0;
+}
