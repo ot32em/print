@@ -1,5 +1,4 @@
 #include <stdexcept>
-#include <limits>
 
 class cstr
 {public:
@@ -29,63 +28,6 @@ constexpr unsigned int char_count(cstr str, char c, unsigned int i=0)
 constexpr unsigned int percent_count(cstr str, unsigned int i=0) 
 {
     return char_count(str, '%', i);
-}
-
-constexpr unsigned long long nth_bit(unsigned char n)
-{
-    return n? 1 << (n - 1): 0;
-}
-
-constexpr unsigned short bit1_count(unsigned long long bits, unsigned short c = 0)
-{
-    return !bits? c: bit1_count(bits >> 1, c + (bits & 1)); 
-}
-
-constexpr unsigned short bit0_count(unsigned long long bits)
-{
-    return bit1_count(bits ^ std::numeric_limits<unsigned long long>::max());
-}
-
-constexpr unsigned long long arg_seq(
-    cstr str, char escape='%', char id='%', unsigned int count_arg = 0, unsigned int i=0)
-{
-    /****
-     *   Hello %s, I'm %s. I have 23.0%% fat rate.
-     *         ^-      ^-             ^-
-     */
-    return i >= str.length()?
-            0:
-            str[i] != escape?
-                arg_seq(str, escape, id, count_arg, i+1): // non % case, advance to next i.
-                i + 1 >= str.length()?
-                    arg_seq(str, escape, id, count_arg, i+1): // only one % at tail. ignore it
-                    str[i + 1] == escape?
-                        arg_seq(str, escape, id, count_arg, i+2): // jump over %%
-                        id == escape? (
-                            nth_bit(1+count_arg) | arg_seq(str, escape, id, count_arg + 1, i+2)
-                        ):(
-                            str[i+1] == id?
-                                nth_bit(1+count_arg) | arg_seq(str, escape, id, count_arg + 1, i+2):
-                                arg_seq(str, escape, id, count_arg + 1, i+1) // bypass unknown arg id
-                        );
-}
-
-constexpr unsigned long long 
-str_arg_seq(cstr str, char escape='%')
-{
-    return arg_seq(str, escape, 's');
-}
-
-constexpr unsigned long long 
-int_arg_seq(cstr str, char escape='%')
-{
-    return arg_seq(str, escape, 'd');
-}
-
-constexpr unsigned long long 
-float_arg_seq(cstr str, char escape='%')
-{
-    return arg_seq(str, escape, 'f');
 }
 
 

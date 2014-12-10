@@ -1,9 +1,9 @@
 #include "../bandit_base.h"
-#include "cstr.h"
+#include "cargseq.h"
 
 go_bandit([]()
 {
-    describe("args seqeunce", [&](){
+    describe("any args seqeunce", [&](){
         it("has no args", [&]()
         {
             static_assert(arg_seq(cstr("Hello world."), '%') == 0,
