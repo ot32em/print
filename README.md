@@ -2,14 +2,14 @@
 
 ## Description and TODO checkbox
 
-[ ] A type-safe printf like function.
+[ ] `print::f` - A type-safe printf like function.
 > `print::f(std::ostream&, const char* msg, args...)`
 
-[ ] A `print::f` with replacing std::ostream with `std::cout`, less typing.
-`print::c(const char* msg, ...)`
+[ ] `print::c` - A `print::f` with replacing std::ostream with `std::cout`, less typing.
+> `print::c(const char* msg, ...)`
 
-[ ] A `print::f` with pure result message to `OutputDebugString`. Very usefull for Windows Developing.
-`print::d(const char* msg, ...)`
+[ ] `print::d` - A `print::f` with pure result message to `OutputDebugString`. Very usefull for Windows Developing.
+> `print::d(const char* msg, ...)`
 
 ## Sample Usage
 
