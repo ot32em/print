@@ -80,11 +80,15 @@ print::d("[Log] name: %s, age: %d, fat rate: %f\n",
 
 ## Run Test
 
-```bash run behavior tests
+### run behavior tests
+
+```bash 
 /path/to/print_root> $ make btest 
 ```
 
-```bash run unit tests
+### run unit tests
+
+```bash 
 /path/to/print_root> $ make utest 
 ```
 
