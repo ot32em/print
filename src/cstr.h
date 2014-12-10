@@ -48,8 +48,8 @@ constexpr unsigned long long arg_seq(cstr str, char escape='#', unsigned int cou
                 i + 1 >= str.length()?
                     arg_seq(str, escape, count_arg, i+1): // only one % at tail.
                     str[i + 1] == escape?
-                        nth_bit(count_arg) | arg_seq(str, escape, count_arg + 1, i+2):
-                        nth_bit(count_arg) | arg_seq(str, escape, count_arg + 1, i+1);
+                        nth_bit(1+count_arg) | arg_seq(str, escape, count_arg + 1, i+2):
+                        nth_bit(1+count_arg) | arg_seq(str, escape, count_arg + 1, i+1);
 }
 
 constexpr unsigned long long str_arg_seq(
