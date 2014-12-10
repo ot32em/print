@@ -47,9 +47,9 @@ constexpr unsigned long long arg_seq(
             str[i] != escape?
                 arg_seq(str, escape, id, count_arg, i+1): // non % case, advance to next i.
                 i + 1 >= str.length()?
-                    arg_seq(str, escape, id, count_arg, i+1): // only one % at tail.
+                    arg_seq(str, escape, id, count_arg, i+1): // only one % at tail. ignore it
                     str[i + 1] == escape?
-                        arg_seq(str, escape, id, count_arg + 1, i+2):
+                        arg_seq(str, escape, id, count_arg, i+2): // jump over %%
                         id == escape? (
                             nth_bit(1+count_arg) | arg_seq(str, escape, id, count_arg + 1, i+2)
                         ):(
@@ -59,11 +59,14 @@ constexpr unsigned long long arg_seq(
                         );
 }
 
-
-constexpr char arg_str_sym(){return 's';}
-constexpr unsigned long long str_arg_seq(
-    cstr str, char escape='%', unsigned int count_arg = 0, unsigned int i = 0)
+constexpr unsigned long long 
+str_arg_seq(cstr str, char escape='%')
 {
     return arg_seq(str, escape, 's');
 }
 
+constexpr unsigned long long 
+int_arg_seq(cstr str, char escape='%')
+{
+    return arg_seq(str, escape, 'd');
+}

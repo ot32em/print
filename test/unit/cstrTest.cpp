@@ -57,9 +57,23 @@ go_bandit([](){
             static_assert(str_arg_seq(cstr("%s %d %d %s")) == 1 + 8, "");
             static_assert(str_arg_seq(cstr("%d %s %s %d")) == 2 + 4, "");
             static_assert(str_arg_seq(cstr("%d %s %d %s")) == 2 + 8, "");
-            static_assert(str_arg_seq(cstr("%s %d %s %d")) == 1 + 4, "");
             static_assert(str_arg_seq(cstr("%s %s %s %d")) == 1 + 2 + 4, "");
             static_assert(str_arg_seq(cstr("%s %s %s %s")) == 1 + 2 + 4 + 8, "");
+        });
+
+        describe("int args sequence", []()
+        {
+            static_assert(int_arg_seq(cstr("%s %d %d %d")) == 2 + 4 + 8, "");
+            static_assert(int_arg_seq(cstr("%d %s %d %d")) == 1 + 4 + 8, "");
+            static_assert(int_arg_seq(cstr("%d %d %s %d")) == 1 + 2 + 8, "");
+            static_assert(int_arg_seq(cstr("%d %d %d %s")) == 1 + 2 + 4, "");
+            static_assert(int_arg_seq(cstr("%s %s %d %d")) == 4 + 8, "");
+            static_assert(int_arg_seq(cstr("%s %d %s %d")) == 2 + 8, "");
+            static_assert(int_arg_seq(cstr("%s %d %d %s")) == 2 + 4, "");
+            static_assert(int_arg_seq(cstr("%d %s %s %d")) == 1 + 8, "");
+            static_assert(int_arg_seq(cstr("%d %s %d %s")) == 1 + 4, "");
+            static_assert(int_arg_seq(cstr("%s %s %s %d")) == 8, "");
+            static_assert(int_arg_seq(cstr("%s %s %s %s")) == 0, "");
         });
     });
     describe("compile time bit helper", []()
