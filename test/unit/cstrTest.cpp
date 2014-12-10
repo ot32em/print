@@ -31,17 +31,17 @@ go_bandit([](){
             });
             it("has 2 str arg", [&]()
             {
-                static_assert(arg_seq(cstr("%s %s."), '%') == 2,
+                static_assert(arg_seq(cstr("%s %s."), '%') == 2+1,
                 "should return (0011) to represent 2 args");
             });
             it("has 3 str args", [&]()
             {
-                static_assert(arg_seq(cstr("Hey %s %s, I'm %s."), '%') == 4,
+                static_assert(arg_seq(cstr("Hey %s %s, I'm %s."), '%') == 4+2+1,
                 "should return (0111) to represent 3 args");
             });
             it("has 4 str args", [&]()
             {
-                static_assert(arg_seq(cstr("Hey %s %s, I'm %s %s."), '%') == 8,
+                static_assert(arg_seq(cstr("Hey %s %s, I'm %s %s."), '%') == 8+4+2+1,
                 "should return (1111) to represent 4 args");
             });
         });
@@ -58,6 +58,16 @@ go_bandit([](){
             static_assert(nth_bit(5) == 32, "5th should be 00100000"); 
             static_assert(nth_bit(6) == 64, "6th should be 01000000"); 
             static_assert(nth_bit(7) == 128, "7th should be 10000000"); 
+            static_assert(nth_bit(7) == 128, "7th should be 10000000"); 
+
+            static_assert(nth_bit(8) == 256, "8th should be 10000000"); 
+            static_assert(nth_bit(9) == 512, "9th should be 10000000"); 
+            static_assert(nth_bit(10) == 1024, "10th should be 10000000"); 
+            static_assert(nth_bit(11) == 2048, "11th should be 10000000"); 
+            static_assert(nth_bit(12) == 4096, "12th should be 10000000"); 
+            static_assert(nth_bit(13) == 8192, "13th should be 10000000"); 
+            static_assert(nth_bit(14) == 16384, "14th should be 10000000"); 
+            static_assert(nth_bit(15) == 32768 , "15th should be 10000000"); 
         });
     });
 });
