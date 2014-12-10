@@ -1,28 +1,79 @@
 #TODO:
 
-## Usage like:
+## Description and TODO checkbox
+
+[ ] A type-safe printf like function.
+> `print::f(std::ostream&, const char* msg, args...)`
+
+[ ] A `print::f` with replacing std::ostream with `std::cout`, less typing.
+`print::c(const char* msg, ...)`
+
+[ ] A `print::f` with pure result message to `OutputDebugString`. Very usefull for Windows Developing.
+`print::d(const char* msg, ...)`
+
+## Sample Usage
 
 ``` cpp
-print(std::cout, "My cat is named %. % is % years old. Eat % pounds food per day", 
-    "Nini", std::string("Nini"), 5, 3.14);
+print::f(std::cout, "My cat is named %s. %s is %d years old." 
+    "Nini", std::string("Nini"), 5);
+// print `My cat is named Nini. Nini is 5 years old` into std::cout
+
+print::c("%s eats food %f pounds every day. And %s fat rate is %f%%",
+    "Nini", 3.14, "her", 20.0);
+// print `Nini eats food 3.14 pounds every day. And her fat rate is 20.0%` on std::cout 
+
+print::d("[Log] name: %s, age: %d, fat rate: %f\n",
+    username(), get_age(), get_fatrate());
+// equals OutputDebugString("[Log] name: OT, age: 99, fat rate 25\n");
 ```
 
-``` bash
-My cat is named Nini. Nini is 5 years old. eat 3.14 pounds food per day.
-```
+## Format Symbol
 
-## Three functions:
+ - %s: expect string 
+    - `std::string`
+    - `const char*`
 
-- `print(std::ostream&, const char* msg, args...)`
+ - %d: expect integer
+    - bool
+    - short
+    - int
+    - ...
+    - to long long 
+    - builtin integers.
 
-- `cprint(msg, ...)`
-    > like  print(std::cout, msg, ...)
+ - %f: expect floating integers
+    - float
+    - double
+    - long double
 
-- dprint(msg, ...)
-    > write stream to OutputDebugString(Windows only)
- 
-  - Need implement a basic_streambuf.
+ - %%: a escape symbol to represent %
+
+
+## Error Handling
+
+1. Any wrong type arguments as wrong position causes compile error.
+
+    ``` cpp
+    print::c("I'm %s.", 123); // static_assert complains arg1(%s) expects string
+    ```
+
+2. Any wrong amount arguments on given message causes compile error.
+    
+    ``` cpp
+    print::c("I'm %s. You're %s", "OT"); // static_assert complains missing arg2.
+    ```
+
+3. Any unrecongized format symbol e.g. %g %a causes compile error.
+
+    ``` cpp
+    print::c("I'm %a", "OT"); // static_assert complains unknown symbol
+    ```
 
 ## Limitation
   
-  - msg must be a string literal for compile-time arguments amount and type checking.
+  - Msg must be a string literal for compile-time arguments amount and type checking.
+
+    ``` cpp
+    print::c(std::string("Herher! %s!"), "HAHA"); // gg
+
+    ```
