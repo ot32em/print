@@ -1,13 +1,16 @@
 #include <iostream>
 
-void print(std::ostream& out)
+namespace print
 {
-    
-}
+    void f(std::ostream& out)
+    {
+        
+    }
 
-template<typename T, typename ...ArgsT>
-void print(std::ostream& out, const T& value, const ArgsT... args)
-{
-    out << value;
-    print(out, args...);
+    template<typename T, typename ...ArgsT>
+    void f(std::ostream& out, const T& value, const ArgsT... args)
+    {
+        out << value;
+        f(out, args...);
+    }
 }
