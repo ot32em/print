@@ -1,6 +1,4 @@
-#TODO:
-
-## Description and TODO checkbox
+# Description and TODO List
 
 [ ] `print::f` - A type-safe printf like function.
 > `print::f(std::ostream&, const char* msg, args...)`
