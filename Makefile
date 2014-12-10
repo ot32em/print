@@ -1,4 +1,4 @@
-CC=g++
+CC=clang++
 CFLAGS=-std=c++11
 
 TEST_CC=$(CC) $(CFLAGS)
