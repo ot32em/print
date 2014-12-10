@@ -53,19 +53,19 @@ print::d("[Log] name: %s, age: %d, fat rate: %f\n",
 
 1. Any wrong type arguments as wrong position causes compile error.
 
-    ``` cpp
+    ```cpp
     print::c("I'm %s.", 123); // static_assert complains arg1(%s) expects string
     ```
 
 2. Any wrong amount arguments on given message causes compile error.
     
-    ``` cpp
+    ```cpp
     print::c("I'm %s. You're %s", "OT"); // static_assert complains missing arg2.
     ```
 
 3. Any unrecongized format symbol e.g. %g %a causes compile error.
 
-    ``` cpp
+    ```cpp
     print::c("I'm %a", "OT"); // static_assert complains unknown symbol
     ```
 
@@ -73,18 +73,18 @@ print::d("[Log] name: %s, age: %d, fat rate: %f\n",
   
   - Msg must be a string literal for compile-time arguments amount and type checking.
 
-    ``` cpp
+    ```cpp
     print::c(std::string("Herher! %s!"), "HAHA"); // gg
 
     ```
 
 ## Run Test
 
-``` bash run behavior tests
+```bash run behavior tests
 /path/to/print_root> $ make btest 
 ```
 
-``` bash run unit tests
+```bash run unit tests
 /path/to/print_root> $ make utest 
 ```
 
