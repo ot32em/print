@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <limits>
 
 class cstr
 {public:
@@ -42,7 +43,7 @@ constexpr unsigned short bit1_count(unsigned long long bits, unsigned short c = 
 
 constexpr unsigned short bit0_count(unsigned long long bits)
 {
-        return bit1_count(bits ^ 0xffffffff);
+        return bit1_count(bits ^ std::numeric_limits<unsigned long long>::max());
 }
 
 constexpr unsigned long long arg_seq(
