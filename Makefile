@@ -14,7 +14,13 @@ TEST_RUNNER=$(TEST_SRC_DIR)/runner.cpp
 BTEST_SRC=$(wildcard $(TEST_SRC_DIR)/functional/*Test.cpp) $(TEST_RUNNER)
 UTEST_SRC=$(wildcard $(TEST_SRC_DIR)/unit/*Test.cpp) $(TEST_RUNNER)
 
+ETEST_SRC=src/exp.cpp
+
 all:
+
+exp:
+	@$(TEST_CC) $(TEST_INCLUDE) $(ETEST_SRC) -o $(TEST_BIN_PATH)
+	@./$(TEST_BIN_PATH)
 
 test: btest utest
 
