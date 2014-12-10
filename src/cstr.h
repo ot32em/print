@@ -35,6 +35,16 @@ constexpr unsigned long long nth_bit(unsigned char n)
     return n? 1 << (n - 1): 0;
 }
 
+constexpr unsigned short bit1_count(unsigned long long bits, unsigned short c = 0)
+{
+        return !bits? c: bit1_count(bits >> 1, c + (bits & 1)); 
+}
+
+constexpr unsigned short bit0_count(unsigned long long bits)
+{
+        return bit1_count(bits ^ 0xffffffff);
+}
+
 constexpr unsigned long long arg_seq(
     cstr str, char escape='%', char id='%', unsigned int count_arg = 0, unsigned int i=0)
 {
@@ -76,3 +86,5 @@ float_arg_seq(cstr str, char escape='%')
 {
     return arg_seq(str, escape, 'f');
 }
+
+
