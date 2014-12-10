@@ -32,7 +32,7 @@ constexpr unsigned int percent_count(cstr str, unsigned int i=0)
 
 constexpr unsigned long long nth_bit(unsigned char n)
 {
-    return 1 << n;
+    return n? 1 << (n - 1): 0;
 }
 
 constexpr unsigned long long arg_seq(cstr str, char escape='#', unsigned int count_arg = 0, unsigned int i=0)
