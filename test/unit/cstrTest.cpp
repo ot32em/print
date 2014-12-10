@@ -48,41 +48,18 @@ go_bandit([](){
 
         describe("str args sequence", []()
         {
-            it("has 0 str", []()
-            {
-                static_assert(str_arg_seq(cstr("%d %d %d %d")) == 0,
-                    "should return 0000 to represent 0 str");
-            });
-            it("has 1 str", []()
-            {
-                static_assert(str_arg_seq(cstr("%s %d %d %d")) == 1,
-                    "should return 0001 to represent 1 str at 1th arg");
-
-                static_assert(str_arg_seq(cstr("%d %s %d %d")) == 2,
-                    "should return 0010 to represent 1 str at 2th arg");
-
-                static_assert(str_arg_seq(cstr("%d %d %s %d")) == 4,
-                    "should return 0100 to represent 1 str at 3th arg");
-
-                static_assert(str_arg_seq(cstr("%d %d %d %s")) == 8,
-                    "should return 1000 to represent 1 str at 4th arg");
-
-                static_assert(str_arg_seq(cstr("%s %s %d %d")) == 1 + 2, "");
-
-                static_assert(str_arg_seq(cstr("%s %d %s %d")) == 1 + 4, "");
-
-                static_assert(str_arg_seq(cstr("%s %d %d %s")) == 1 + 8, "");
-
-                static_assert(str_arg_seq(cstr("%d %s %s %d")) == 2 + 4, "");
-
-                static_assert(str_arg_seq(cstr("%d %s %d %s")) == 2 + 8, "");
-
-                static_assert(str_arg_seq(cstr("%s %d %s %d")) == 1 + 4, "");
-
-                static_assert(str_arg_seq(cstr("%s %s %s %d")) == 1 + 2 + 4, "");
-
-                static_assert(str_arg_seq(cstr("%s %s %s %s")) == 1 + 2 + 4 + 8, "");
-            });
+            static_assert(str_arg_seq(cstr("%s %d %d %d")) == 1, "");
+            static_assert(str_arg_seq(cstr("%d %s %d %d")) == 2, "");
+            static_assert(str_arg_seq(cstr("%d %d %s %d")) == 4, "");
+            static_assert(str_arg_seq(cstr("%d %d %d %s")) == 8, "");
+            static_assert(str_arg_seq(cstr("%s %s %d %d")) == 1 + 2, "");
+            static_assert(str_arg_seq(cstr("%s %d %s %d")) == 1 + 4, "");
+            static_assert(str_arg_seq(cstr("%s %d %d %s")) == 1 + 8, "");
+            static_assert(str_arg_seq(cstr("%d %s %s %d")) == 2 + 4, "");
+            static_assert(str_arg_seq(cstr("%d %s %d %s")) == 2 + 8, "");
+            static_assert(str_arg_seq(cstr("%s %d %s %d")) == 1 + 4, "");
+            static_assert(str_arg_seq(cstr("%s %s %s %d")) == 1 + 2 + 4, "");
+            static_assert(str_arg_seq(cstr("%s %s %s %s")) == 1 + 2 + 4 + 8, "");
         });
     });
     describe("compile time bit helper", []()
