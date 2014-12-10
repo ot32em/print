@@ -46,10 +46,6 @@ go_bandit([](){
             });
         });
     });
-});
-
-
-go_bandit([](){
     describe("compile time bit helper", []()
     {
         it("nth_bit", []()
@@ -64,5 +60,4 @@ go_bandit([](){
             static_assert(nth_bit(7) == 128, "7th should be 10000000"); 
         });
     });
-
 });

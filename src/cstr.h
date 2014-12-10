@@ -30,6 +30,11 @@ constexpr unsigned int percent_count(cstr str, unsigned int i=0)
     return char_count(str, '%', i);
 }
 
+constexpr unsigned long long nth_bit(unsigned char n)
+{
+    return 1 << n;
+}
+
 constexpr unsigned long long arg_seq(cstr str, char escape='#', unsigned int count_arg = 0, unsigned int i=0)
 {
     /****
@@ -43,11 +48,7 @@ constexpr unsigned long long arg_seq(cstr str, char escape='#', unsigned int cou
                 i + 1 >= str.length()?
                     arg_seq(str, escape, count_arg, i+1): // only one % at tail.
                     str[i + 1] == escape?
-                        nthbit(count_arg) | arg_seq(str, escape, count_arg + 1, i+2):
-                        nthbit(count_arg) | arg_seq(str, escape, count_arg + 1, i+1);
+                        nth_bit(count_arg) | arg_seq(str, escape, count_arg + 1, i+2):
+                        nth_bit(count_arg) | arg_seq(str, escape, count_arg + 1, i+1);
 }
 
-constexpr unsigned long long nth_bit(unsigned char n)
-{
-    return 0;
-}
