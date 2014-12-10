@@ -1,6 +1,6 @@
-class Format
+class Msg
 {public:
-    Format(const char* msg)
+    Msg(const char* msg)
     {}
 
     void add(const char* str)
