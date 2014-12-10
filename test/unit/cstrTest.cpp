@@ -66,6 +66,22 @@ go_bandit([](){
 
                 static_assert(str_arg_seq(cstr("%d %d %d %s")) == 8,
                     "should return 1000 to represent 1 str at 4th arg");
+
+                static_assert(str_arg_seq(cstr("%s %s %d %d")) == 1 + 2, "");
+
+                static_assert(str_arg_seq(cstr("%s %d %s %d")) == 1 + 4, "");
+
+                static_assert(str_arg_seq(cstr("%s %d %d %s")) == 1 + 8, "");
+
+                static_assert(str_arg_seq(cstr("%d %s %s %d")) == 2 + 4, "");
+
+                static_assert(str_arg_seq(cstr("%d %s %d %s")) == 2 + 8, "");
+
+                static_assert(str_arg_seq(cstr("%s %d %s %d")) == 1 + 4, "");
+
+                static_assert(str_arg_seq(cstr("%s %s %s %d")) == 1 + 2 + 4, "");
+
+                static_assert(str_arg_seq(cstr("%s %s %s %s")) == 1 + 2 + 4 + 8, "");
             });
         });
     });
