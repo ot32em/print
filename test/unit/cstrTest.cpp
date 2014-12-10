@@ -48,3 +48,21 @@ go_bandit([](){
     });
 });
 
+
+go_bandit([](){
+    describe("compile time bit helper", []()
+    {
+        it("nth_bit", []()
+        {
+            static_assert(nth_bit(0) == 1, "0th should be 00000001"); 
+            static_assert(nth_bit(1) == 2, "1th should be 00000010"); 
+            static_assert(nth_bit(2) == 4, "2th should be 00000100"); 
+            static_assert(nth_bit(3) == 8, "3th should be 00001000"); 
+            static_assert(nth_bit(4) == 16, "4th should be 00010000"); 
+            static_assert(nth_bit(5) == 32, "5th should be 00100000"); 
+            static_assert(nth_bit(6) == 64, "6th should be 01000000"); 
+            static_assert(nth_bit(7) == 128, "7th should be 10000000"); 
+        });
+    });
+
+});
