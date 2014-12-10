@@ -1,4 +1,4 @@
-#include "../bandit_base.h"
+#include "bandit_base.h"
 #include "cargseq.h"
 
 go_bandit([]()

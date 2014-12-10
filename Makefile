@@ -3,7 +3,8 @@ CFLAGS=-std=c++11
 
 TEST_CC=$(CC) $(CFLAGS)
 TEST_INCLUDE=-Ilib/bandit \
-			 -Isrc
+			 -Isrc \
+			 -Itest
 
 TEST_BIN=tester.out
 TEST_BIN_DIR=test_build

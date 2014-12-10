@@ -1,16 +1,17 @@
-#include "bandit/bandit.h"
+#include "bandit_base.h"
 #include "cstr.h"
 
-using namespace bandit;
-
-go_bandit([](){
-    describe("Compile Time String", [](){
+go_bandit([]()
+{
+    describe("Compile Time String", []()
+    {
         it("counts msg length", [&]()
         {
             static_assert(
                 cstr("Hello world.").length() == 12, 
                 "msg's length should be 8.");
         });
+
         it("counts symbol count", [&]()
         {
             static_assert(
