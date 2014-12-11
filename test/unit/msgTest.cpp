@@ -30,7 +30,6 @@ go_bandit([]()
             AssertThat(Msg("abc abc %% %%").count_format_count(), Equals(0));
             AssertThat(Msg("dce de%%").count_format_count(), Equals(0));
             AssertThat(Msg("asflkjsafklw").count_format_count(), Equals(0));
-            AssertThat(Msg("%d %d %% %f %f %f").count_format_count(), Equals(0));
         });
     });
 });
