@@ -80,4 +80,28 @@ go_bandit([]()
         static_assert(float_arg_seq(cstr("%s %s %s %f")) == 8, "");
         static_assert(float_arg_seq(cstr("%s %s %s %s")) == 0, "");
     });
+
+    describe("arg_pos_at", []()
+    {
+        it("null case", []()
+        {
+            static_assert(arg_pos_at(cstr(""), 0) == -1, "");
+
+        });
+        it("4 args simple case", []()
+        {
+            static_assert(arg_pos_at(cstr("%f%f%f%f"), 0) == 0, "");
+            static_assert(arg_pos_at(cstr("%f%f%f%f"), 1) == 2, "");
+            static_assert(arg_pos_at(cstr("%f%f%f%f"), 3) == 6, "");
+            static_assert(arg_pos_at(cstr("%f%f%f%f"), 4) == std::size_t(-1), "");
+        });
+
+        it("4 args with %% case", []()
+        {
+            static_assert(arg_pos_at(cstr(" %s %% %d %f"), 0) == 1, "");
+            static_assert(arg_pos_at(cstr(" %s %% %d %f"), 1) == 7, "");
+            static_assert(arg_pos_at(cstr(" %s %% %d %f"), 2) == 9, "");
+            static_assert(arg_pos_at(cstr(" %s %% %d %f"), 3) == -1, "");
+        });
+    });
 });

@@ -46,3 +46,9 @@ float_arg_seq(cstr str, char escape='%')
 }
 
 
+constexpr std::size_t arg_pos_at(cstr msg, unsigned nth_arg, unsigned i = 0)
+{
+    return 0;
+}
+
+
