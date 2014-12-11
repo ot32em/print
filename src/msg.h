@@ -1,3 +1,4 @@
+#include <tuple>
 #include "cbit.h"
 #include "cstr.h"
 #include "cargseq.h"
@@ -15,7 +16,7 @@ class Msg
         {
             if(bit_at(i) & str_arg_seq(msg))
             {
-                str_args_[i].first = true;
+                std::get<0>(str_args_[i]) = true;
             }
         }
     }
@@ -23,9 +24,9 @@ class Msg
     void add(const char* str)
     {
         auto& arg = str_args_[added_args_++];
-        if(arg.first)
+        if(std::get<0>(arg))
         {
-            arg.second = str;
+            std::get<2>(arg) = str;
         }
     };
 
@@ -34,9 +35,9 @@ class Msg
         std::string result = msg_;
         for(const auto& arg: str_args_)
         {
-            if(arg.first)
+            if(std::get<0>(arg))
             {
-               result += arg.second;
+               result += std::get<2>(arg);
             }
         }
         return result;
@@ -48,14 +49,15 @@ class Msg
         {
             case ArgType::Str:
                 return  std::count_if(str_args_.begin(), str_args_.end(), 
-                    [](const std::pair<bool, std::string>& v) { return v.first; });
+                    [](const ArgInfo& v) { return std::get<0>(v); });
             default:
                 return str_args_.size(); 
         }
     } 
 
 private:
+    using ArgInfo = std::tuple<bool, std::size_t, std::string>;
     std::string msg_;
-    std::vector<std::pair<bool, std::string>> str_args_;
+    std::vector<ArgInfo> str_args_;
     std::size_t added_args_;
 };
