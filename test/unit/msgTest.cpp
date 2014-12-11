@@ -25,8 +25,12 @@ go_bandit([]()
     });
 
     describe("args counts", [&]() {
-        it("runs case 1", [&]() {
-            AssertThat(Msg("%s %s").count_format_count(), Equals(2));
+        it("runs no args", [&]() {
+            AssertThat(Msg("%% %%").count_format_count(), Equals(0));
+            AssertThat(Msg("abc abc %% %%").count_format_count(), Equals(0));
+            AssertThat(Msg("dce de%%").count_format_count(), Equals(0));
+            AssertThat(Msg("asflkjsafklw").count_format_count(), Equals(0));
+            AssertThat(Msg("%d %d %% %f %f %f").count_format_count(), Equals(0));
         });
     });
 });
