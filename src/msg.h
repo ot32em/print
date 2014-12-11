@@ -12,9 +12,9 @@ class Msg
     {
         for(std::size_t i = 0; i < str_args_.size(); i++)
         {
-            if(bit_at(i) & str_arg_seq(msg))
+            if(bit_at(i+1) & str_arg_seq(msg))
             {
-                str_args_[i] = std::make_pair(true, "");
+                str_args_[i].first = true;
             }
         }
     }
@@ -33,8 +33,8 @@ class Msg
         switch(t)
         {
             case ArgType::Str:
-                return  0;
-                //std::count_if(str_args_.begin(), str_args_.end(), [](const std::pair<bool, std::string>& v) { return v.first; });
+                return  std::count_if(str_args_.begin(), str_args_.end(), 
+                    [](const std::pair<bool, std::string>& v) { return v.first; });
             default:
                 return str_args_.size(); 
         }
