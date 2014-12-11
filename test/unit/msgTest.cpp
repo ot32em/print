@@ -38,5 +38,12 @@ go_bandit([]()
             AssertThat(Msg("dce%d de%%").count_format_count(), Equals(1));
             AssertThat(Msg("asfl%skjsafklw").count_format_count(), Equals(1));
         });
+
+        it("runs 5 args", [&]() {
+            AssertThat(Msg("%s %d %d %f %s").count_format_count(), Equals(5));
+            AssertThat(Msg("%sf%s%d%fa%sf").count_format_count(), Equals(5));
+            AssertThat(Msg("%f%s%d%%s%f%%s%d").count_format_count(), Equals(5));
+            AssertThat(Msg("Hello %s %f is %d and %d and %f").count_format_count(), Equals(5));
+        });
     });
 });
