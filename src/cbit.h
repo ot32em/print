@@ -4,7 +4,7 @@
 
 constexpr unsigned long long bit_at(unsigned char n)
 {
-    return n? 1 << (n - 1): 0;
+    return 1 << n;
 }
 
 constexpr unsigned short count_bit1(unsigned long long bits, unsigned short c = 0)

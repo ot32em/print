@@ -13,7 +13,7 @@ class Msg
     {
         for(std::size_t i = 0; i < str_args_.size(); i++)
         {
-            if(bit_at(i+1) & str_arg_seq(msg))
+            if(bit_at(i) & str_arg_seq(msg))
             {
                 str_args_[i].first = true;
             }
