@@ -1,6 +1,7 @@
 class Msg
 {public:
     Msg(const char* msg)
+        :msg_(msg)
     {}
 
     void add(const char* str)
@@ -9,6 +10,8 @@ class Msg
 
     std::string str() const
     {
-        return "";
+        return msg_;
     }
+private:
+    std::string msg_;
 };
