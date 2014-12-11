@@ -100,7 +100,7 @@ go_bandit([]()
         {
             static_assert(arg_pos_at(cstr(" %s %% %d %f"), 0) == 1, "");
             static_assert(arg_pos_at(cstr(" %s %% %d %f"), 1) == 7, "");
-            static_assert(arg_pos_at(cstr(" %s %% %d %f"), 2) == 9, "");
+            static_assert(arg_pos_at(cstr(" %s %% %d %f"), 2) == 10, "");
             static_assert(arg_pos_at(cstr(" %s %% %d %f"), 3) == -1, "");
         });
     });
