@@ -1,3 +1,5 @@
+#pragma once
+
 #include "cstr.h"
 #include "cbit.h"
 

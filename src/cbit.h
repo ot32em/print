@@ -1,3 +1,5 @@
+#pragma once
+
 #include <limits>
 
 constexpr unsigned long long bit_at(unsigned char n)
