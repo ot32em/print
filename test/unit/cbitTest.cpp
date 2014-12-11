@@ -28,14 +28,14 @@ go_bandit([]()
 
         it("compare 3~4 bytes", []()
         {
-            static_asssert(bit_at(19) == 524288, "");
-            static_asssert(bit_at(31) == 2147483648, "");
+            static_assert(bit_at(19) == 524288ULL, "");
+            static_assert(bit_at(31) == 2147483648ULL, "");
         });
 
         it("compare 5~8 bytes", []()
         {
-            static_assert(bit_at(48) == 281474976710656, "");
-            static_assert(bit_at(63) == 9223372036854775808, "");
+            static_assert(bit_at(48) == 281474976710656ULL, "");
+            static_assert(bit_at(63) == 9223372036854775808ULL, "");
         });
     });
 
