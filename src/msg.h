@@ -4,6 +4,7 @@
 
 class Msg
 {public:
+    enum class ArgType {Any, Str};
     template<unsigned int N>
     Msg(const char (&msg)[N])
         :msg_(msg),
@@ -27,12 +28,17 @@ class Msg
         return msg_;
     }
 
-    std::size_t count_format_count() const 
+    std::size_t count_format_count(ArgType t = ArgType::Any) const 
     { 
-        return str_args_.size(); 
-    }
-
-private:
+        switch(t)
+        {
+            case ArgType::Str:
+                return  0;
+                //std::count_if(str_args_.begin(), str_args_.end(), [](const std::pair<bool, std::string>& v) { return v.first; });
+            default:
+                return str_args_.size(); 
+        }
+    } private:
     std::string msg_;
 
     std::vector<std::pair<bool, std::string>> str_args_;

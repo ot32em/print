@@ -46,4 +46,45 @@ go_bandit([]()
             AssertThat(Msg("Hello %s %f is %d and %d and %f").count_format_count(), Equals(5));
         });
     });
+    
+    describe("str args counts", [&]() {
+        it("runs no args", [&]() {
+            AssertThat(Msg("%% %%").count_format_count(Msg::ArgType::Str), Equals(0));
+        });
+        it("runs 0 arg - 2", [&](){
+            AssertThat(Msg("abc abc %f %%").count_format_count(Msg::ArgType::Str), Equals(0));
+        });
+        it("runs 0 arg - 3", [&](){
+            AssertThat(Msg("dce de%d").count_format_count(Msg::ArgType::Str), Equals(0));
+        });
+        it("runs 0 arg - 4", [&](){
+            AssertThat(Msg("as%flkjs%daklw").count_format_count(Msg::ArgType::Str), Equals(0));
+        });
+
+        it("runs 1 arg - 1", [&]() {
+            AssertThat(Msg("%s %d").count_format_count(Msg::ArgType::Str), Equals(1));
+        });
+        it("runs 1 arg - 2", [&](){
+            AssertThat(Msg("abc %s abc %% %%").count_format_count(Msg::ArgType::Str), Equals(1));
+        });
+        it("runs 1 arg - 3", [&](){
+            AssertThat(Msg("dce%d de%s").count_format_count(Msg::ArgType::Str), Equals(1));
+        });
+        it("runs 1 arg - 4", [&](){
+            AssertThat(Msg("asfl%skjsafklw").count_format_count(Msg::ArgType::Str), Equals(1));
+        });
+
+        it("runs 5 args", [&]() {
+            AssertThat(Msg("%s %s %s %s %s").count_format_count(Msg::ArgType::Str), Equals(5));
+        });
+        it("runs 5 args - 2", [&]() {
+            AssertThat(Msg("%sf%s%d%sa%sf%s").count_format_count(Msg::ArgType::Str), Equals(5));
+        });
+        it("runs 5 args - 3", [&]() {
+            AssertThat(Msg("%%s%s%s%%d%%s%f%s%d%s%%%s").count_format_count(Msg::ArgType::Str), Equals(5));
+        });
+        it("runs 5 args - 4", [&]() {
+            AssertThat(Msg("Hello %s %s is %s and %s and %s").count_format_count(Msg::ArgType::Str), Equals(5));
+        });
+    });
 });
