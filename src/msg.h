@@ -17,6 +17,7 @@ class Msg
             if(bit_at(i) & str_arg_seq(msg))
             {
                 std::get<0>(str_args_[i]) = true;
+                std::get<1>(str_args_[i]) = arg_pos_at(msg, i);
             }
         }
     }
@@ -32,15 +33,28 @@ class Msg
 
     std::string str() const
     {
-        std::string result = msg_;
-        for(const auto& arg: str_args_)
+        if(str_args_.empty())
         {
-            if(std::get<0>(arg))
-            {
-               result += std::get<2>(arg);
-            }
+            return msg_;
         }
-        return result;
+        else
+        {
+            std::string result;
+            result.reserve(msg_.size());
+            std::size_t left_pos = 0;
+            for(const auto& arg: str_args_)
+            {
+                if(std::get<0>(arg))
+                {
+                    std::size_t right_pos = std::get<1>(arg);
+                    result += msg_.substr(left_pos, right_pos - left_pos);
+                    result += std::get<2>(arg);
+                    left_pos = right_pos + 2;
+                }
+            }
+            result += msg_.substr(left_pos, msg_.size() - left_pos);
+            return result;
+        }
     }
 
     std::size_t count_format(ArgType t = ArgType::Any) const 

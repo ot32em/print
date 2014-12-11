@@ -7,7 +7,7 @@ go_bandit([]()
     {
         PtrT<Msg> pMsg;
         before_each([&]() {
-            pMsg.reset(new Msg("Hello %s"));
+            pMsg.reset(new Msg("Hello %s."));
         });
 
         describe("Msg::str", [&]() {
