@@ -12,6 +12,9 @@ class Msg
     {
         return msg_;
     }
+
+    std::size_t count_format_count() const { return 0; }
+
 private:
     std::string msg_;
 };
