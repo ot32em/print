@@ -28,7 +28,7 @@ class Msg
         return msg_;
     }
 
-    std::size_t count_format_count(ArgType t = ArgType::Any) const 
+    std::size_t count_format(ArgType t = ArgType::Any) const 
     { 
         switch(t)
         {
