@@ -1,6 +1,6 @@
 #include <limits>
 
-constexpr unsigned long long nth_bit(unsigned char n)
+constexpr unsigned long long bit_at(unsigned char n)
 {
     return n? 1 << (n - 1): 0;
 }

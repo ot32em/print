@@ -17,10 +17,10 @@ constexpr unsigned long long arg_seq(
                     str[i + 1] == escape?
                         arg_seq(str, escape, id, count_arg, i+2): // jump over %%
                         id == escape? (
-                            nth_bit(1+count_arg) | arg_seq(str, escape, id, count_arg + 1, i+2)
+                            bit_at(1+count_arg) | arg_seq(str, escape, id, count_arg + 1, i+2)
                         ):(
                             str[i+1] == id?
-                                nth_bit(1+count_arg) | arg_seq(str, escape, id, count_arg + 1, i+2):
+                                bit_at(1+count_arg) | arg_seq(str, escape, id, count_arg + 1, i+2):
                                 arg_seq(str, escape, id, count_arg + 1, i+1) // bypass unknown arg id
                         );
 }
