@@ -32,21 +32,21 @@ go_bandit([]()
         const unsigned int n = 8;
         const unsigned int n2 = 8 + 1024;
 
-        describe("bit1_count", [&]() {
+        describe("count_bit1", [&]() {
             it("counts n", [&]() {
-                static_assert(bit1_count(n) == 1, "");
+                static_assert(count_bit1(n) == 1, "");
             });
             it("counts n2", [&]() {
-                static_assert(bit1_count(n2) == 2, "");
+                static_assert(count_bit1(n2) == 2, "");
             });
         });
 
-        describe("bit0_count", [&]() {
+        describe("count_bit0", [&]() {
             it("counts n", [&]() {
-                static_assert(bit0_count(n) == 63, "");
+                static_assert(count_bit0(n) == 63, "");
             });
             it("counts n2", [&]() {
-                static_assert(bit0_count(n2) == 62, "");
+                static_assert(count_bit0(n2) == 62, "");
             });
         });
     });
