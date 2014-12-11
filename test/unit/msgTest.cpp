@@ -3,13 +3,21 @@
 
 go_bandit([]()
 {
-    describe("Msg", []()
+    describe("Msg with Hello", []()
     {
-        it("formats one string arg.", []()
-        {
-            Msg m("Hello %s.");
-            m.add("world");
-            AssertThat(m.str(), Equals("Hello world."));
+        PtrT<Msg> pMsg;
+        before_each([&]() {
+            pMsg.reset(new Msg("Hello %s"));
+        });
+
+        it("to world", [&](){
+            pMsg->add("world");
+            AssertThat(pMsg->str(), Equals("Hello world."));
+        });
+
+        it("to John", [&](){
+            pMsg->add("John");
+            AssertThat(pMsg->str(), Equals("Hello John."));
         });
     });
 });
