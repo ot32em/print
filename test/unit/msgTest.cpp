@@ -22,8 +22,11 @@ go_bandit([]()
             });
         });
 
-        it("get format args count", [&]() {
-            AssertThat(pMsg->count_format_count(), Equals(1));
+    });
+
+    describe("args counts", [&]() {
+        it("runs case 1", [&]() {
+            AssertThat(Msg("%s %s").count_format_count(), Equals(2));
         });
     });
 });
