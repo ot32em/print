@@ -5,7 +5,7 @@ go_bandit([]()
 {
     describe("nth_bit", []()
     {
-        it("nth_bit", []()
+        it("compare integers {0,1,2,4,8,...,32768}", []()
         {
             static_assert(nth_bit(0) == 0,  "0th should be 00000000"); 
             static_assert(nth_bit(1) == 1,  "1th should be 00000001"); 
@@ -27,19 +27,27 @@ go_bandit([]()
             static_assert(nth_bit(16) == 32768, "16th should be 10000000 00000000"); 
         });
     });
-    describe("bit1_count", []()
-    {
-        it("in 1 bit case", []()
-        {
-            static_assert(bit1_count(8) == 1, "");
-        });
-    });
 
-    describe("bit0_count", []()
-    {
-        it("in 1 bit case", []()
-        {
-            static_assert(bit0_count(8) == 63, "");
+    describe("bit counters", [&](){
+        const unsigned int n = 8;
+        const unsigned int n2 = 8 + 1024;
+
+        describe("bit1_count", [&]() {
+            it("counts n", [&]() {
+                static_assert(bit1_count(n) == 1, "");
+            });
+            it("counts n2", [&]() {
+                static_assert(bit1_count(n2) == 2, "");
+            });
+        });
+
+        describe("bit0_count", [&]() {
+            it("counts n", [&]() {
+                static_assert(bit0_count(n) == 63, "");
+            });
+            it("counts n2", [&]() {
+                static_assert(bit0_count(n2) == 62, "");
+            });
         });
     });
 });
