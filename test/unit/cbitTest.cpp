@@ -25,6 +25,18 @@ go_bandit([]()
             static_assert(bit_at(14) == 16384, "14th should be 01000000 00000000"); 
             static_assert(bit_at(15) == 32768, "15th should be 10000000 00000000"); 
         });
+
+        it("compare 3~4 bytes", []()
+        {
+            static_asssert(bit_at(19) == 524288, "");
+            static_asssert(bit_at(31) == 2147483648, "");
+        });
+
+        it("compare 5~8 bytes", []()
+        {
+            static_assert(bit_at(48) == 281474976710656, "");
+            static_assert(bit_at(63) == 9223372036854775808, "");
+        });
     });
 
     describe("bit counters", [&](){
