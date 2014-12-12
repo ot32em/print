@@ -3,24 +3,38 @@
 
 go_bandit([]()
 {
-    describe("Msg with `Hello %s.`", []()
+    describe("Msg add and str", []()
     {
-        PtrT<Msg> pMsg;
+        PtrT<Msg> pMsgWithString;
+        PtrT<Msg> pMsgWithInt;
         before_each([&]() {
-            pMsg.reset(new Msg(cstr("Hello %s.")));
+            pMsgWithString.reset(new Msg(cstr("Hello %s.")));
+            pMsgWithInt.reset(new Msg(cstr("Lucky %d.")));
         });
 
-        describe("Msg::str", [&]() {
+        describe("Msg with string", [&]() {
             it("adds world", [&](){
-                pMsg->add("world");
-                AssertThat(pMsg->str(), Equals("Hello world."));
+                pMsgWithString->add("world");
+                AssertThat(pMsgWithString->str(), Equals("Hello world."));
             });
-
             it("adds John", [&](){
-                pMsg->add("John");
-                AssertThat(pMsg->str(), Equals("Hello John."));
+                pMsgWithString->add("John");
+                AssertThat(pMsgWithString->str(), Equals("Hello John."));
             });
         });
+
+        describe("Add integer to MsgWithInt", [&]() {
+            it("adds 7", [&]() {
+                pMsgWithInt->add(7);
+                AssertThat(pMsgWithInt->str(), Equals("Lucky 7."));
+            });
+            
+            it("adds 5566", [&]() {
+                pMsgWithInt->add(5566);
+                AssertThat(pMsgWithInt->str(), Equals("Lucky 5566."));
+            });
+        });
+
 
     });
 

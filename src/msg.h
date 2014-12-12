@@ -22,6 +22,10 @@ class Msg
         str_values_[added_strs_++] = str;
     };
 
+    void add(int v)
+    {
+    }
+
     std::string str() const
     {
         if(str_values_.empty()) { return msg_.str(); }
