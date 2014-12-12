@@ -6,11 +6,10 @@ class cstr
 {public:
     template<unsigned int N>
     constexpr cstr(const char (&str)[N]) :length_(N-1), pstr_(str) {} 
-
     constexpr unsigned int length() const { return length_; }
     constexpr char operator[](int i) const { 
         return i < length_?  pstr_[i]: throw std::out_of_range(""); }
-
+    constexpr const char* str() const { return pstr_? pstr_: throw std::invalid_argument("null cstr"); }
 private:
     const unsigned int length_;
     const char* const pstr_;

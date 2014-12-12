@@ -6,9 +6,8 @@
 class Msg
 {public:
     enum class ArgType {Any, Str};
-    template<unsigned int N>
-    Msg(const char (&msg)[N])
-        :msg_(msg),
+    Msg(cstr msg)
+        :msg_(msg.str()),
          str_args_(count_bit1(any_arg_seq(cstr(msg)))),
          added_args_(0)
     {
