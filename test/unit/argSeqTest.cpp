@@ -104,4 +104,5 @@ go_bandit([]()
             static_assert(arg_pos_at(cstr(" %s %% %d %f"), 3) == -1, "");
         });
     });
+
 });

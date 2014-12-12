@@ -56,5 +56,3 @@ constexpr std::size_t arg_pos_at(cstr msg, unsigned nth_arg, char escape = '%', 
                         nth_arg != 0 ? arg_pos_at(msg, nth_arg - 1, escape, i+2):
                         i;
 }
-
-
