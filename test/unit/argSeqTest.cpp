@@ -6,27 +6,27 @@ go_bandit([]()
     describe("any args seqeunce", [&](){
         it("has no args", [&]()
         {
-            static_assert(arg_seq(cstr("Hello world."), '%') == 0,
+            static_assert(any_arg_seq(cstr("Hello world."), '%') == 0,
             "should return (0000) to represent no args");
         });
         it("has 1 str arg", [&]()
         {
-            static_assert(arg_seq(cstr("Hello %s."), '%') == 1,
+            static_assert(any_arg_seq(cstr("Hello %s."), '%') == 1,
             "should return (0001) to represent 1 arg");
         });
         it("has 2 str arg", [&]()
         {
-            static_assert(arg_seq(cstr("%s %s."), '%') == 2+1,
+            static_assert(any_arg_seq(cstr("%s %s."), '%') == 2+1,
             "should return (0011) to represent 2 args");
         });
         it("has 3 str args", [&]()
         {
-            static_assert(arg_seq(cstr("Hey %s %s, I'm %s."), '%') == 4+2+1,
+            static_assert(any_arg_seq(cstr("Hey %s %s, I'm %s."), '%') == 4+2+1,
             "should return (0111) to represent 3 args");
         });
         it("has 4 str args", [&]()
         {
-            static_assert(arg_seq(cstr("Hey %s %s, I'm %s %s."), '%') == 8+4+2+1,
+            static_assert(any_arg_seq(cstr("Hey %s %s, I'm %s %s."), '%') == 8+4+2+1,
             "should return (1111) to represent 4 args");
         });
     });

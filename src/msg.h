@@ -9,7 +9,7 @@ class Msg
     template<unsigned int N>
     Msg(const char (&msg)[N])
         :msg_(msg),
-         str_args_(count_bit1(arg_seq(cstr(msg)))),
+         str_args_(count_bit1(any_arg_seq(cstr(msg)))),
          added_args_(0)
     {
         for(std::size_t i = 0; i < str_args_.size(); i++)

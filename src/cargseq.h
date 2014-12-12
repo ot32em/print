@@ -5,7 +5,7 @@
 
 using seq_t = unsigned long long;
 
-constexpr seq_t arg_seq(
+constexpr seq_t any_arg_seq(
     cstr str, char escape='%', char id='%', unsigned int count_arg = 0, unsigned int i=0)
 {
     /****
@@ -15,33 +15,33 @@ constexpr seq_t arg_seq(
     return i >= str.length()?
             0:
             str[i] != escape?
-                arg_seq(str, escape, id, count_arg, i+1): // non % case, advance to next i.
+                any_arg_seq(str, escape, id, count_arg, i+1): // non % case, advance to next i.
                 i + 1 >= str.length()?
-                    arg_seq(str, escape, id, count_arg, i+1): // only one % at tail. ignore it
+                    any_arg_seq(str, escape, id, count_arg, i+1): // only one % at tail. ignore it
                     str[i + 1] == escape?
-                        arg_seq(str, escape, id, count_arg, i+2): // jump over %%
-                        id == escape? (
-                            bit_at(count_arg) | arg_seq(str, escape, id, count_arg + 1, i+2)
+                        any_arg_seq(str, escape, id, count_arg, i+2): // jump over %%
+                        id == escape? ( // any_arg will reconginize any symbol with prefix %
+                            bit_at(count_arg) | any_arg_seq(str, escape, id, count_arg + 1, i+2)
                         ):(
                             str[i+1] == id?
-                                bit_at(count_arg) | arg_seq(str, escape, id, count_arg + 1, i+2):
-                                arg_seq(str, escape, id, count_arg + 1, i+1) // bypass unknown arg id
+                                bit_at(count_arg) | any_arg_seq(str, escape, id, count_arg + 1, i+2):
+                                any_arg_seq(str, escape, id, count_arg + 1, i+1) // bypass unknown arg id
                         );
 }
 
 constexpr seq_t str_arg_seq(cstr str, char escape='%')
 {
-    return arg_seq(str, escape, 's');
+    return any_arg_seq(str, escape, 's');
 }
 
 constexpr seq_t int_arg_seq(cstr str, char escape='%')
 {
-    return arg_seq(str, escape, 'd');
+    return any_arg_seq(str, escape, 'd');
 }
 
 constexpr seq_t float_arg_seq(cstr str, char escape='%')
 {
-    return arg_seq(str, escape, 'f');
+    return any_arg_seq(str, escape, 'f');
 }
 
 
