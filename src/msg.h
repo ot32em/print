@@ -17,7 +17,7 @@ class Msg
             if(bit_at(i) & str_arg_seq(msg))
             {
                 std::get<0>(str_args_[i]) = true;
-                std::get<1>(str_args_[i]) = arg_pos_at(msg, i);
+                std::get<1>(str_args_[i]) = pos_of_nth_arg(msg, i);
             }
         }
     }
