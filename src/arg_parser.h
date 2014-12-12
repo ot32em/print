@@ -24,11 +24,13 @@ class ArgParser
     {
         seq_t all_seq = any_arg_seq(msg);
         seq_t str_seq = str_arg_seq(msg);
+        seq_t int_seq = int_arg_seq(msg);
+        seq_t float_seq = float_arg_seq(msg);
 
         arg_infos_.resize(count_bit1(all_seq));
         for(std::size_t i = 0; i < arg_infos_.size(); i++)
         {
-            arg_infos_[i].type = arg_type_at_bit(i, str_seq);
+            arg_infos_[i].type = arg_type_at_bit(i, str_seq, int_seq, float_seq);
             arg_infos_[i].pos = pos_of_nth_arg(msg, i);
         }
     }
