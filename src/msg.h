@@ -8,13 +8,9 @@ class Msg
 {public:
     enum class ArgType {Any, Str};
     Msg(cstr msg): msg_(msg), ap_(msg), 
-                   added_args_(0), added_str_args_(0)
+                   added_args_(0), added_strs_(0),
+                   str_values_(ap_.count_args('s'))
     {
-        for(std::size_t i = 0; i != ap_.count_args(); i++) {
-            if(ap_[i].type == 's') {
-                str_args_.push_back(std::make_pair(i, ""));
-            }
-        }
     } 
 
     void add(const char* str)
@@ -23,24 +19,24 @@ class Msg
         if(arg.type != 's') {
             throw std::invalid_argument("should be str");
         }
-        str_args_[added_str_args_++].second = str;
+        str_values_[added_strs_++] = str;
     };
 
     std::string str() const
     {
-        if(str_args_.empty()) { return msg_.str(); }
+        if(str_values_.empty()) { return msg_.str(); }
 
-        std::string src(msg_.str());
+        const std::string src(msg_.str());
         std::string result;
         std::size_t left_pos = 0;
-        std::size_t merged_str_arg = 0;
+        std::size_t merged_strs = 0;
         for(const auto& arg: ap_)
         {
             if(arg.type == 's')
             {
                 std::size_t right_pos = arg.pos;
                 result += src.substr(left_pos, right_pos - left_pos);
-                result += str_args_[merged_str_arg++].second; 
+                result += str_values_[merged_strs++]; 
                 left_pos = right_pos + 2;
             }
         }
@@ -56,8 +52,8 @@ class Msg
 
 private:
     cstr msg_;
-    std::size_t added_args_;
-    std::size_t added_str_args_;
     ArgParser ap_;
-    std::vector<std::pair<unsigned, std::string>> str_args_;
+    std::size_t added_args_;
+    std::vector<std::string> str_values_;
+    std::size_t added_strs_;
 };
