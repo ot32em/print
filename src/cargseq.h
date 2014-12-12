@@ -3,7 +3,9 @@
 #include "cstr.h"
 #include "cbit.h"
 
-constexpr unsigned long long arg_seq(
+using seq_t = unsigned long long;
+
+constexpr seq_t arg_seq(
     cstr str, char escape='%', char id='%', unsigned int count_arg = 0, unsigned int i=0)
 {
     /****
@@ -27,20 +29,17 @@ constexpr unsigned long long arg_seq(
                         );
 }
 
-constexpr unsigned long long 
-str_arg_seq(cstr str, char escape='%')
+constexpr seq_t str_arg_seq(cstr str, char escape='%')
 {
     return arg_seq(str, escape, 's');
 }
 
-constexpr unsigned long long 
-int_arg_seq(cstr str, char escape='%')
+constexpr seq_t int_arg_seq(cstr str, char escape='%')
 {
     return arg_seq(str, escape, 'd');
 }
 
-constexpr unsigned long long 
-float_arg_seq(cstr str, char escape='%')
+constexpr seq_t float_arg_seq(cstr str, char escape='%')
 {
     return arg_seq(str, escape, 'f');
 }
