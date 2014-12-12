@@ -48,7 +48,7 @@ class Msg
         return result;
     }
 
-    std::size_t count_format(ArgType t = ArgType::Any ) const 
+    std::size_t count_args(ArgType t = ArgType::Any ) const 
     { 
         if(t == ArgType::Any) return ap_.count_args('%');
         return ap_.count_args('s');
