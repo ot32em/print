@@ -35,16 +35,23 @@ class ArgParser
         }
     }
 
-
-    std::size_t count_args() const
+    std::size_t count_args(char arg_s='%') const
     {
-        return arg_infos_.size();
+        if(arg_s == '%') return arg_infos_.size();
+        return std::count_if(arg_infos_.begin(), arg_infos_.end(), 
+                [arg_s](ArgInfo ai){ return ai.type == arg_s; });
     };
 
     ArgInfo operator[](std::size_t i) const
     {
         return arg_infos_.at(i);
     }
+
+    std::vector<ArgInfo>::iterator begin() { return arg_infos_.begin(); }
+    std::vector<ArgInfo>::iterator end() { return arg_infos_.end(); }
+
+    std::vector<ArgInfo>::const_iterator begin() const { return arg_infos_.begin(); }
+    std::vector<ArgInfo>::const_iterator end() const { return arg_infos_.end(); }
 
 private:
     cstr msg_;
