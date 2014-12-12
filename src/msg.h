@@ -31,6 +31,10 @@ class Msg
         int_values_[added_ints_++] = (unsigned long long)v;
     }
 
+    void add(double v)
+    {
+    }
+
     std::string str() const
     {
         if(added_args_ == 0) { return msg_.str(); }

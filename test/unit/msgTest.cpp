@@ -7,9 +7,11 @@ go_bandit([]()
     {
         PtrT<Msg> pMsgWithString;
         PtrT<Msg> pMsgWithInt;
+        PtrT<Msg> pMsgWithFloat;
         before_each([&]() {
             pMsgWithString.reset(new Msg(cstr("Hello %s.")));
             pMsgWithInt.reset(new Msg(cstr("Lucky %d.")));
+            pMsgWithFloat.reset(new Msg(cstr("%f %% juice.")));
         });
 
         describe("Msg with string", [&]() {
@@ -32,6 +34,18 @@ go_bandit([]()
             it("adds 5566", [&]() {
                 pMsgWithInt->add(5566);
                 AssertThat(pMsgWithInt->str(), Equals("Lucky 5566."));
+            });
+        });
+
+        describe("Add float number to MsgWithFloat", [&]() {
+            it("adds 75.5", [&]() {
+                pMsgWithFloat->add(75.5);
+                AssertThat(pMsgWithInt->str(), Equals("75.5 % juice."));
+            });
+            
+            it("adds 100.0", [&]() {
+                pMsgWithFloat->add(100.0);
+                AssertThat(pMsgWithInt->str(), Equals("100 % juice."));
             });
         });
 
