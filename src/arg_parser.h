@@ -7,8 +7,8 @@ constexpr char arg_type_at_bit(unsigned bit_i){
 }
 
 template<typename... seq_ts> 
-constexpr char arg_type_at_bit(unsigned bit_i, seq_t test_seq, seq_ts... other_seqs) {
-    return (test_seq & bit_at(bit_i))? 's': arg_type_at_bit(bit_i, other_seqs...);
+constexpr char arg_type_at_bit(unsigned bit_i, seq_t test_seq, char seq_c, seq_ts... other_seqs) {
+    return (test_seq & bit_at(bit_i))? seq_c: arg_type_at_bit(bit_i, other_seqs...);
 }
 
 class ArgParser
@@ -30,7 +30,7 @@ class ArgParser
         arg_infos_.resize(count_bit1(all_seq));
         for(std::size_t i = 0; i < arg_infos_.size(); i++)
         {
-            arg_infos_[i].type = arg_type_at_bit(i, str_seq, int_seq, float_seq);
+            arg_infos_[i].type = arg_type_at_bit(i, str_seq, 's', int_seq, 'd', float_seq, 'f');
             arg_infos_[i].pos = pos_of_nth_arg(msg, i);
         }
     }
