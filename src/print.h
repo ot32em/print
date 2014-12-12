@@ -1,18 +1,27 @@
 #pragma once
 
 #include <iostream>
+#include "msg.h"
 
 namespace print
 {
-    void f(std::ostream& out)
+    Msg& m(Msg& msg)
     {
-        
+        return msg;
     }
 
     template<typename T, typename ...ArgsT>
-    void f(std::ostream& out, const T& value, const ArgsT... args)
+    Msg& m(Msg& msg, const T& v, const ArgsT... args)
     {
-        out << value;
-        f(out, args...);
+        msg.add(v);
+        return m(msg, args...);
+    }
+
+    template<unsigned N, typename ...ArgsT>
+    void f(std::ostream& out, const char (&str)[N], const ArgsT... args)
+    {
+        Msg msg(str);
+        m(msg, args...);
+        out << msg.str();
     }
 }

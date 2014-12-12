@@ -33,7 +33,7 @@ class Msg
 
     std::string str() const
     {
-        if(str_values_.empty()) { return msg_.str(); }
+        if(added_args_ == 0) { return msg_.str(); }
 
         const std::string src(msg_.str());
         std::string result;
