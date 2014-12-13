@@ -40,12 +40,12 @@ go_bandit([]()
         describe("Add float number to MsgWithFloat", [&]() {
             it("adds 75.5", [&]() {
                 pMsgWithFloat->add(75.5);
-                AssertThat(pMsgWithInt->str(), Equals("75.5 % juice."));
+                AssertThat(pMsgWithFloat->str(), Equals("75.5 % juice."));
             });
             
             it("adds 100.0", [&]() {
                 pMsgWithFloat->add(100.0);
-                AssertThat(pMsgWithInt->str(), Equals("100 % juice."));
+                AssertThat(pMsgWithFloat->str(), Equals("100 % juice."));
             });
         });
 
