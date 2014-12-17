@@ -45,7 +45,7 @@ go_bandit([]()
             
             it("adds 100.0", [&]() {
                 pMsgWithFloat->add(100.0);
-                AssertThat(pMsgWithFloat->str(), Equals("100 % juice."));
+                AssertThat(pMsgWithFloat->str(), Equals("100.0 % juice."));
             });
         });
 
