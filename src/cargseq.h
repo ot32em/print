@@ -8,17 +8,17 @@ using seq_t = unsigned long long;
 constexpr seq_t any_arg_seq(
     cstr str, char escape='%', char id='*', unsigned int count_arg = 0, unsigned int i=0)
 {
-    return 
+    return
         i >= str.length() || i + 1 >= str.length()?
             0ULL // end of analyze
         : str[i] != escape?
             any_arg_seq(str, escape, id, count_arg, i+1) // non arg, pass it
-        : id == '*'? 
+        : id == '*'?
             bit_at(count_arg) | any_arg_seq(str, escape, id, count_arg + 1, i+2) // detected a arg, includes it
         : str[i+1] == id?
             bit_at(count_arg) | any_arg_seq(str, escape, id, count_arg + 1, i+2) // detected specific arg, includes it
         :
-            any_arg_seq(str, escape, id, count_arg + 1, i+2); // detected other arg, pass it 
+            any_arg_seq(str, escape, id, count_arg + 1, i+2); // detected other arg, pass it
         ;
 }
 
@@ -40,11 +40,17 @@ constexpr seq_t float_arg_seq(cstr str, char escape='%')
 
 constexpr std::size_t pos_of_nth_arg(cstr msg, unsigned nth_arg, char escape = '%', unsigned i = 0)
 {
-    return 
-        i == msg.length()? -1:
-            i + 1 == msg.length()? -1:
-                msg[i] != escape? pos_of_nth_arg(msg, nth_arg, escape, i+1):
-                    msg[i+1] == escape? pos_of_nth_arg(msg, nth_arg, escape, i+2):
-                        nth_arg != 0 ? pos_of_nth_arg(msg, nth_arg - 1, escape, i+2):
-                        i;
+    return
+        i == msg.length()?
+            -1
+        : i + 1 == msg.length()?
+            -1
+        : msg[i] != escape?
+            pos_of_nth_arg(msg, nth_arg, escape, i+1)
+        : msg[i+1] == escape?
+            pos_of_nth_arg(msg, nth_arg, escape, i+2)
+        : nth_arg != 0 ?
+            pos_of_nth_arg(msg, nth_arg - 1, escape, i+2)
+        :
+            i;
 }
