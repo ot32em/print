@@ -8,7 +8,7 @@ go_bandit([]()
         ArgParser ap(cstr("Hello %s, This is %dth day to drink %f%% %s juice."));
         //                        01234 6789 1234 6789 1234 6789 1234 6789 1234 6789
         it("args_count", [&](){
-            AssertThat(ap.count_args(), Equals(4));
+            AssertThat(ap.count_args(), Equals(5));
         });
         it("deals 0th arg", [&]() {
             AssertThat(ap[0].type, Equals('s'));
@@ -23,8 +23,12 @@ go_bandit([]()
             AssertThat(ap[2].pos, Equals(36));
         });
         it("deals 3th arg", [&](){
-            AssertThat(ap[3].type, Equals('s'));
-            AssertThat(ap[3].pos, Equals(41));
+            AssertThat(ap[3].type, Equals('%'));
+            AssertThat(ap[3].pos, Equals(38));
+        });
+        it("deals 4th arg", [&](){
+            AssertThat(ap[4].type, Equals('s'));
+            AssertThat(ap[4].pos, Equals(41));
         });
     });
 });
