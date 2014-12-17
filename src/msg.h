@@ -64,6 +64,9 @@ class Msg
                 sprintf(buf, "%.1f", val);
                 result += buf;
             }
+            else if(arg.type == '%') {
+                result += "%";
+            }
             
             left_pos = right_pos + 2;
         }
