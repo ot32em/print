@@ -67,7 +67,7 @@ go_bandit([](){
 
             it("prints memory usage info", [&]()
             {
-                print::f(out, "Memery Usage: %f%%.", 20.8);
+                print::f(out, "Memory Usage: %f%%.", 20.8);
                 AssertThat(out.str(), Equals("Memory Usage: 20.8%."));
             });
 
