@@ -18,25 +18,36 @@ class Msg
     void add(const char* str)
     {
         auto arg = ap_[added_args_++];
-        if(arg.type != 's') {
-            throw std::invalid_argument("should be str");
+        while(arg.type == '%')
+        {
+            if(added_args_ == ap_.count_args()) { throw std::invalid_argument("No more arg to escape when adding a string."); }
+            arg = ap_[added_args_++];
         }
+        if(arg.type != 's') { throw std::invalid_argument("Adding a string, but msg arg type does not match."); }
         str_values_[added_strs_++] = str;
     };
 
     void add(int v)
     {
-        if(ap_[added_args_++].type != 'd') {
-            throw std::invalid_argument("add(int) should be integer.");
+        auto arg = ap_[added_args_++];
+        while(arg.type == '%')
+        {
+            if(added_args_ == ap_.count_args()) { throw std::invalid_argument("No more arg to escape when adding a integer."); }
+            arg = ap_[added_args_++];
         }
+        if(arg.type != 'd') { throw std::invalid_argument("Adding a integer, but msg arg type does not match."); }
         int_values_[added_ints_++] = (unsigned long long)v;
     }
 
     void add(double v)
     {
-        if(ap_[added_args_++].type != 'f') {
-            throw std::invalid_argument("add(double) should be floating.");
+        auto arg = ap_[added_args_++];
+        while(arg.type == '%')
+        {
+            if(added_args_ == ap_.count_args()) { throw std::invalid_argument("No more arg to escape when adding a floating integer."); }
+            arg = ap_[added_args_++];
         }
+        if(arg.type != 'f') { throw std::invalid_argument("Adding a floating integer, but msg arg type does not match."); }
         float_values_[added_floats_++] = v;
     }
 

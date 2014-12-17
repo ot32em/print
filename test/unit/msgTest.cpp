@@ -1,8 +1,7 @@
 #include "bandit_base.h"
 #include "msg.h"
 
-go_bandit([]()
-{
+go_bandit([]() {
     describe("Msg", []() {
         Msg msg(cstr("Hello %s, This is %dth day to drink %f%% %s juice."));
 
