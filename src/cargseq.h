@@ -41,16 +41,12 @@ constexpr seq_t float_arg_seq(cstr str, char escape='%')
 constexpr std::size_t pos_of_nth_arg(cstr msg, unsigned nth_arg, char escape = '%', unsigned i = 0)
 {
     return
-        i == msg.length()?
-            -1
-        : i + 1 == msg.length()?
-            -1
+        i == msg.length() || i + 1 == msg.length()?
+            -1 // end of string
         : msg[i] != escape?
-            pos_of_nth_arg(msg, nth_arg, escape, i+1)
-        : msg[i+1] == escape?
-            pos_of_nth_arg(msg, nth_arg, escape, i+2)
+            pos_of_nth_arg(msg, nth_arg, escape, i+1) // normal char, move on
         : nth_arg != 0 ?
-            pos_of_nth_arg(msg, nth_arg - 1, escape, i+2)
+            pos_of_nth_arg(msg, nth_arg - 1, escape, i+2) // detected arg, not the nth, continue 
         :
-            i;
+            i; // detected nth arg 
 }
