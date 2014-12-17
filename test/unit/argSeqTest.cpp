@@ -1,108 +1,36 @@
 #include "bandit_base.h"
 #include "cargseq.h"
 
+
+#define TEST_STR "%s %f %s %d %d %f %% %%%% %d%% %s%% %d%d%d %f%f"
+//                s     s                        s                3
+//                         d  d             d         d d d       6
+//                   f           f                           f f  4
+//                                  %  % %    %    %              5
+//
+//                0  1  2  3  4  5  6  7 8  9 0  1 2  3 4 5  6 7
 go_bandit([]()
 {
-    describe("any args seqeunce", [&](){
-        it("has no args", [&]()
-        {
-            static_assert(any_arg_seq(cstr("Hello world."), '%') == 0,
-            "should return (0000) to represent no args");
+    describe("arg_seq", [&]() {
+        it("any args", [&]() {
+            static_assert(any_arg_seq(cstr(TEST_STR), '%', '*') == -1LLU >> (63 - 17), 
+                "should be 0000 0000 0000 0011  1111 1111 1111 1111");
         });
-        it("has 1 str arg", [&]()
-        {
-            static_assert(any_arg_seq(cstr("Hello %s."), '%') == 1,
-            "should return (0001) to represent 1 arg");
+        it("str args", [&]() {
+            static_assert(any_arg_seq(cstr(TEST_STR), '%', 's') ==  bit_at(0) || bit_at(2) || bit_at(11), 
+                "should be 0000 0000 0000 0000  0000 1000 0000 0101");
         });
-        it("has 2 str arg", [&]()
-        {
-            static_assert(any_arg_seq(cstr("%s %s."), '%') == 2+1,
-            "should return (0011) to represent 2 args");
+        it("int args", [&]() {
+            static_assert(any_arg_seq(cstr(TEST_STR), '%', 'd') ==  bit_at(3) || bit_at(4) || bit_at(9) || bit_at(13) || bit_at(14) || bit_at(15),
+                "should be 0000 0000 0000 0000  1110 0010 0001 1000");
         });
-        it("has 3 str args", [&]()
-        {
-            static_assert(any_arg_seq(cstr("Hey %s %s, I'm %s."), '%') == 4+2+1,
-            "should return (0111) to represent 3 args");
+        it("float args", [&]() {
+            static_assert(any_arg_seq(cstr(TEST_STR), '%', 'f') == bit_at(1) || bit_at(5) || bit_at(16) || bit_at(17),
+                "should be 0000 0000 0000 0011  0000 0000 0010 0010");
         });
-        it("has 4 str args", [&]()
-        {
-            static_assert(any_arg_seq(cstr("Hey %s %s, I'm %s %s."), '%') == 8+4+2+1,
-            "should return (1111) to represent 4 args");
+        it("% args", [&]() {
+            static_assert(any_arg_seq(cstr(TEST_STR), '%', '%') == bit_at(6) || bit_at(7) || bit_at(8) || bit_at(10) || bit_at(12),
+                "should be 0000 0000 0000 0000  0001 0101 1100 0000");
         });
     });
-
-    describe("str args sequence", []()
-    {
-        static_assert(str_arg_seq(cstr("%s %d %d %d")) == 1, "");
-        static_assert(str_arg_seq(cstr("%d %s %d %d")) == 2, "");
-        static_assert(str_arg_seq(cstr("%d %d %s %d")) == 4, "");
-        static_assert(str_arg_seq(cstr("%d %d %d %s")) == 8, "");
-        static_assert(str_arg_seq(cstr("%s %s %d %d")) == 1 + 2, "");
-        static_assert(str_arg_seq(cstr("%s %d %s %d")) == 1 + 4, "");
-        static_assert(str_arg_seq(cstr("%s %d %d %s")) == 1 + 8, "");
-        static_assert(str_arg_seq(cstr("%d %s %s %d")) == 2 + 4, "");
-        static_assert(str_arg_seq(cstr("%d %s %d %s")) == 2 + 8, "");
-        static_assert(str_arg_seq(cstr("%s %s %s %d")) == 1 + 2 + 4, "");
-        static_assert(str_arg_seq(cstr("%s %s %s %s")) == 1 + 2 + 4 + 8, "");
-
-        static_assert(str_arg_seq(cstr("%d %% %s %d")) == 2, "");
-        static_assert(str_arg_seq(cstr("%d %s %% %s")) == 2 + 4, "");
-        static_assert(str_arg_seq(cstr("%% %s %s %d")) == 1 + 2, "");
-        static_assert(str_arg_seq(cstr("%s %% %s %s")) == 1 + 2 + 4, "");
-    });
-
-    describe("int args sequence", []()
-    {
-        static_assert(int_arg_seq(cstr("%s %d %d %d")) == 2 + 4 + 8, "");
-        static_assert(int_arg_seq(cstr("%d %s %d %d")) == 1 + 4 + 8, "");
-        static_assert(int_arg_seq(cstr("%d %d %s %d")) == 1 + 2 + 8, "");
-        static_assert(int_arg_seq(cstr("%d %d %d %s")) == 1 + 2 + 4, "");
-        static_assert(int_arg_seq(cstr("%s %s %d %d")) == 4 + 8, "");
-        static_assert(int_arg_seq(cstr("%s %d %s %d")) == 2 + 8, "");
-        static_assert(int_arg_seq(cstr("%s %d %d %s")) == 2 + 4, "");
-        static_assert(int_arg_seq(cstr("%d %s %s %d")) == 1 + 8, "");
-        static_assert(int_arg_seq(cstr("%d %s %d %s")) == 1 + 4, "");
-        static_assert(int_arg_seq(cstr("%s %s %s %d")) == 8, "");
-        static_assert(int_arg_seq(cstr("%s %s %s %s")) == 0, "");
-    });
-
-    describe("float args sequence", []()
-    {
-        static_assert(float_arg_seq(cstr("%s %f %f %f")) == 2 + 4 + 8, "");
-        static_assert(float_arg_seq(cstr("%f %s %f %f")) == 1 + 4 + 8, "");
-        static_assert(float_arg_seq(cstr("%f %f %s %f")) == 1 + 2 + 8, "");
-        static_assert(float_arg_seq(cstr("%f %f %f %s")) == 1 + 2 + 4, "");
-        static_assert(float_arg_seq(cstr("%s %s %f %f")) == 4 + 8, "");
-        static_assert(float_arg_seq(cstr("%s %f %s %f")) == 2 + 8, "");
-        static_assert(float_arg_seq(cstr("%s %f %f %s")) == 2 + 4, "");
-        static_assert(float_arg_seq(cstr("%f %s %s %f")) == 1 + 8, "");
-        static_assert(float_arg_seq(cstr("%f %s %f %s")) == 1 + 4, "");
-        static_assert(float_arg_seq(cstr("%s %s %s %f")) == 8, "");
-        static_assert(float_arg_seq(cstr("%s %s %s %s")) == 0, "");
-    });
-
-    describe("pos_of_nth_arg", []()
-    {
-        it("null case", []()
-        {
-            static_assert(pos_of_nth_arg(cstr(""), 0) == -1, "");
-
-        });
-        it("4 args simple case", []()
-        {
-            static_assert(pos_of_nth_arg(cstr("%f%f%f%f"), 0) == 0, "");
-            static_assert(pos_of_nth_arg(cstr("%f%f%f%f"), 1) == 2, "");
-            static_assert(pos_of_nth_arg(cstr("%f%f%f%f"), 3) == 6, "");
-            static_assert(pos_of_nth_arg(cstr("%f%f%f%f"), 4) == std::size_t(-1), "");
-        });
-
-        it("4 args with %% case", []()
-        {
-            static_assert(pos_of_nth_arg(cstr(" %s %% %d %f"), 0) == 1, "");
-            static_assert(pos_of_nth_arg(cstr(" %s %% %d %f"), 1) == 7, "");
-            static_assert(pos_of_nth_arg(cstr(" %s %% %d %f"), 2) == 10, "");
-            static_assert(pos_of_nth_arg(cstr(" %s %% %d %f"), 3) == -1, "");
-        });
-    });
-
 });
