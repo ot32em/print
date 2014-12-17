@@ -59,7 +59,10 @@ class Msg
             } else if(arg.type == 'd') {
                 result += std::to_string(int_values_[merged_ints++]); 
             } else if(arg.type == 'f') {
-                result += std::to_string(float_values_[merged_floats++]); 
+                char buf[32] = {};
+                float val = float_values_[merged_floats++];
+                sprintf(buf, "%.1f", val);
+                result += buf;
             }
             
             left_pos = right_pos + 2;
