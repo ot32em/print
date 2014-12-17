@@ -1,11 +1,9 @@
 #include "bandit_base.h"
 #include "msg.h"
 
-
 go_bandit([]()
 {
-    describe("Msg", []()
-    {
+    describe("Msg", []() {
         Msg msg(cstr("Hello %s, This is %dth day to drink %f%% %s juice."));
 
         it("add vals", [&](){
@@ -20,11 +18,9 @@ go_bandit([]()
             it("counts str", [&]() {
                 AssertThat(msg.count_args(Msg::ArgType::Str), Equals(2));
             });
-
             it("counts int", [&]() {
                 AssertThat(msg.count_args(Msg::ArgType::Int), Equals(1));
             });
-
             it("counts float", [&]() {
                 AssertThat(msg.count_args(Msg::ArgType::Float), Equals(1));
             });
