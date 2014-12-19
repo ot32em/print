@@ -12,14 +12,17 @@ constexpr seq_t any_arg_seq(
         i >= str.length() || i + 1 >= str.length()?
             0ULL // end of analyze
         : str[i] != escape?
-            any_arg_seq(str, escape, id, count_arg, i+1) // non arg, pass it
+            // non arg, pass it
+            any_arg_seq(str, escape, id, count_arg, i+1)
         : id == '*'?
-            bit_at(count_arg) | any_arg_seq(str, escape, id, count_arg + 1, i+2) // detected a arg, includes it
+            // detected a arg, includes it
+            bit_at(count_arg) | any_arg_seq(str, escape, id, count_arg + 1, i+2)
         : str[i+1] == id?
-            bit_at(count_arg) | any_arg_seq(str, escape, id, count_arg + 1, i+2) // detected specific arg, includes it
+            // detected specific arg, includes it
+            bit_at(count_arg) | any_arg_seq(str, escape, id, count_arg + 1, i+2)
         :
-            any_arg_seq(str, escape, id, count_arg + 1, i+2); // detected other arg, pass it
-        ;
+            // detected other arg, pass it
+            any_arg_seq(str, escape, id, count_arg + 1, i+2);
 }
 
 constexpr seq_t str_arg_seq(cstr str, char escape='%')
@@ -46,7 +49,7 @@ constexpr std::size_t pos_of_nth_arg(cstr msg, unsigned nth_arg, char escape = '
         : msg[i] != escape?
             pos_of_nth_arg(msg, nth_arg, escape, i+1) // normal char, move on
         : nth_arg != 0 ?
-            pos_of_nth_arg(msg, nth_arg - 1, escape, i+2) // detected arg, not the nth, continue 
+            pos_of_nth_arg(msg, nth_arg - 1, escape, i+2) // detected arg, not the nth, continue
         :
-            i; // detected nth arg 
+            i; // detected nth arg
 }
