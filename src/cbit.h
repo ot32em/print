@@ -8,9 +8,9 @@ constexpr unsigned long long bit_at(unsigned char n)
 }
 
 template <typename... PositionT>
-constexpr unsigned long long bit_at(unsigned char n, PositionT... posn)
+constexpr unsigned long long bit_at(unsigned char n, PositionT... poses)
 {
-    return 0;
+    return bit_at(n) | bit_at(poses...);
 }
 
 constexpr unsigned short count_bit1(unsigned long long bits, unsigned short c = 0)
