@@ -25,22 +25,6 @@ constexpr seq_t any_arg_seq(
             any_arg_seq(str, id, escape, count_arg + 1, i+2);
 }
 
-constexpr seq_t str_arg_seq(cstr str, char escape='%')
-{
-    return any_arg_seq(str, 's', escape);
-}
-
-constexpr seq_t int_arg_seq(cstr str, char escape='%')
-{
-    return any_arg_seq(str, 'd', escape);
-}
-
-constexpr seq_t float_arg_seq(cstr str, char escape='%')
-{
-    return any_arg_seq(str, 'f', escape);
-}
-
-
 constexpr std::size_t pos_of_nth_arg(cstr msg, unsigned nth_arg, char escape = '%', unsigned i = 0)
 {
     return

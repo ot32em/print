@@ -23,9 +23,9 @@ class ArgParser
         :msg_(msg)
     {
         seq_t all_seq = any_arg_seq(msg, '*');
-        seq_t str_seq = str_arg_seq(msg);
-        seq_t int_seq = int_arg_seq(msg);
-        seq_t float_seq = float_arg_seq(msg);
+        seq_t str_seq = any_arg_seq(msg, 's');
+        seq_t int_seq = any_arg_seq(msg, 'd');
+        seq_t float_seq = any_arg_seq(msg, 'f');
         seq_t escape_seq = any_arg_seq(msg, '%');
 
         arg_infos_.resize(count_bit1(all_seq));
