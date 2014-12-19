@@ -1,5 +1,5 @@
 #include "bandit_base.h"
-#include "arg_parser.h"
+#include "ArgParser.h"
 
 go_bandit([]()
 {

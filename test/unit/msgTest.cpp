@@ -1,5 +1,5 @@
 #include "bandit_base.h"
-#include "msg.h"
+#include "Msg.h"
 
 go_bandit([]() {
     describe("Msg", []() {
