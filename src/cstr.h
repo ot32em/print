@@ -8,6 +8,7 @@ class cstr
     constexpr cstr(const char (&str)[N]): length_(N-1), pstr_(str) {}
 
     constexpr unsigned int length() const { return length_; }
+    constexpr unsigned int size() const { return length(); }
 
     constexpr char operator[](int i) const
     {
