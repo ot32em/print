@@ -15,11 +15,11 @@ go_bandit([]()
 
         it("counts symbol count", [&]()
         {
-            static_assert(char_count(cstr(""), '%') == 0 , "");
-            static_assert(char_count(cstr("Hello"), '%') == 0 , "");
-            static_assert(char_count(cstr("%"), '%') == 1 , "");
-            static_assert(char_count(cstr("% % %"), '%') == 3 , "");
-            static_assert(char_count(cstr("% % % Hello % % %"), '%') == 6 , "");
+            static_assert(count_char(cstr(""), '%') == 0 , "");
+            static_assert(count_char(cstr("Hello"), '%') == 0 , "");
+            static_assert(count_char(cstr("%"), '%') == 1 , "");
+            static_assert(count_char(cstr("% % %"), '%') == 3 , "");
+            static_assert(count_char(cstr("% % % Hello % % %"), '%') == 6 , "");
         });
 
     });

@@ -29,13 +29,13 @@ private:
 };
 
 
-constexpr unsigned int char_count(cstr str, char c, unsigned int i=0)
+constexpr unsigned int count_char(cstr str, char c, unsigned int i=0)
 {
     return
         (i == str.length())?
             0
         :(str[i] == c)?
-            1 + char_count(str, c, i+1)
+            1 + count_char(str, c, i+1)
         :
-            0 + char_count(str, c, i+1);
+            0 + count_char(str, c, i+1);
 }
