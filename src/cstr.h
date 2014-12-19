@@ -38,10 +38,3 @@ constexpr unsigned int char_count(cstr str, char c, unsigned int i=0)
         :
             0 + char_count(str, c, i+1);
 }
-
-constexpr unsigned int percent_count(cstr str, unsigned int i=0)
-{
-    return char_count(str, '%', i);
-}
-
-
