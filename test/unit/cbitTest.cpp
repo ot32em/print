@@ -39,6 +39,16 @@ go_bandit([]()
         });
     });
 
+    describe("bit_at varidiac args", [&]() {
+        it("check", [&]() {
+            static_assert(bit_at(1, 3, 6, 9, 16, 20, 25, 30) == (
+                bit_at(1)  | bit_at(3)  | bit_at(6) 
+              | bit_at(9)  | bit_at(16) | bit_at(20)
+              | bit_at(25) | bit_at(30)
+            ), "");
+        });
+    });
+
     describe("bit counters", [&](){
         const unsigned int n = 8;
         const unsigned int n2 = 8 + 1024;
@@ -61,4 +71,5 @@ go_bandit([]()
             });
         });
     });
+
 });
