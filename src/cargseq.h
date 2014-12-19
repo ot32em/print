@@ -6,38 +6,38 @@
 using seq_t = unsigned long long;
 
 constexpr seq_t any_arg_seq(
-    cstr str, char escape='%', char id='*', unsigned int count_arg = 0, unsigned int i=0)
+    cstr str, char id='*', char escape='%', unsigned int count_arg = 0, unsigned int i=0)
 {
     return
         i >= str.length() || i + 1 >= str.length()?
             0ULL // end of analyze
         : str[i] != escape?
             // non arg, pass it
-            any_arg_seq(str, escape, id, count_arg, i+1)
+            any_arg_seq(str, id, escape, count_arg, i+1)
         : id == '*'?
             // detected a arg, includes it
-            bit_at(count_arg) | any_arg_seq(str, escape, id, count_arg + 1, i+2)
+            bit_at(count_arg) | any_arg_seq(str, id, escape, count_arg + 1, i+2)
         : str[i+1] == id?
             // detected specific arg, includes it
-            bit_at(count_arg) | any_arg_seq(str, escape, id, count_arg + 1, i+2)
+            bit_at(count_arg) | any_arg_seq(str, id, escape, count_arg + 1, i+2)
         :
             // detected other arg, pass it
-            any_arg_seq(str, escape, id, count_arg + 1, i+2);
+            any_arg_seq(str, id, escape, count_arg + 1, i+2);
 }
 
 constexpr seq_t str_arg_seq(cstr str, char escape='%')
 {
-    return any_arg_seq(str, escape, 's');
+    return any_arg_seq(str, 's', escape);
 }
 
 constexpr seq_t int_arg_seq(cstr str, char escape='%')
 {
-    return any_arg_seq(str, escape, 'd');
+    return any_arg_seq(str, 'd', escape);
 }
 
 constexpr seq_t float_arg_seq(cstr str, char escape='%')
 {
-    return any_arg_seq(str, escape, 'f');
+    return any_arg_seq(str, 'f', escape);
 }
 
 
