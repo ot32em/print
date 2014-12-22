@@ -4,6 +4,19 @@
 #include "cargseq.h"
 #include "ArgParser.h"
 
+struct AddingWrongTypeArg : public std::invalid_argument
+{
+    AddingWrongTypeArg(const char* msg): std::invalid_argument(msg){}
+};
+
+void validate_arg_type(const ArgParser::ArgInfo& arg, char c, const char* err_msg="")
+{
+    if(arg.type != c) 
+    {
+        throw AddingWrongTypeArg(err_msg);
+    }
+}
+
 class Msg
 {public:
     enum class ArgType {Any, Str, Int, Float};
@@ -23,24 +36,21 @@ class Msg
     void add(const char* str)
     {
         auto arg = ap_.next_nonescape_arg(added_args_);
-
-        if(arg.type != 's') { 
-            throw std::invalid_argument("Adding a string, but msg arg type does not match."); 
-        }
+        validate_arg_type(arg, 's', "Adding a string");
         str_values_[added_strs_++] = str;
     };
 
     void add(int v)
     {
         auto arg = ap_.next_nonescape_arg(added_args_);
-        if(arg.type != 'd') { throw std::invalid_argument("Adding a integer, but msg arg type does not match."); }
+        validate_arg_type(arg, 'd', "Adding a integer");
         int_values_[added_ints_++] = (unsigned long long)v;
     }
 
     void add(double v)
     {
         auto arg = ap_.next_nonescape_arg(added_args_);
-        if(arg.type != 'f') { throw std::invalid_argument("Adding a floating integer, but msg arg type does not match."); }
+        validate_arg_type(arg, 'f', "Adding a floating number");
         float_values_[added_floats_++] = v;
     }
 
@@ -100,3 +110,4 @@ private:
     std::vector<double> float_values_;
     std::size_t added_floats_;
 };
+
