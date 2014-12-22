@@ -37,3 +37,12 @@ constexpr std::size_t pos_of_nth_arg(cstr msg, unsigned nth_arg, char esc_c = '%
         :
             i; // detected nth arg
 }
+
+constexpr char arg_type_at_bit(unsigned bit_i){
+    return '?';
+}
+
+template<typename... seq_ts>
+constexpr char arg_type_at_bit(unsigned bit_i, seq_t test_seq, char seq_c, seq_ts... other_seqs) {
+    return (test_seq & bit_at(bit_i))? seq_c: arg_type_at_bit(bit_i, other_seqs...);
+}
