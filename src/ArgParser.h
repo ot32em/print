@@ -31,9 +31,12 @@ class ArgParser
 
     std::size_t count_args(char arg_s='*') const
     {
-        if(arg_s == '*') return arg_infos_.size();
-        return std::count_if(arg_infos_.begin(), arg_infos_.end(), 
-                [arg_s](ArgInfo ai){ return ai.type == arg_s; });
+        if(arg_s == '*') { return arg_infos_.size(); }
+
+        return std::count_if(
+            arg_infos_.begin(), 
+            arg_infos_.end(), 
+            [arg_s](ArgInfo ai){ return ai.type == arg_s; });
     };
 
     ArgInfo operator[](std::size_t i) const
