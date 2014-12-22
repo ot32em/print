@@ -25,7 +25,7 @@ class Msg
         auto arg = ap_[added_args_++];
         while(arg.type == '%')
         {
-            if(added_args_ == ap_.count_args()) { 
+            if(added_all_args()) { 
                 throw std::invalid_argument("No more arg to escape when adding a string."); 
             }
             arg = ap_[added_args_++];
@@ -36,12 +36,17 @@ class Msg
         str_values_[added_strs_++] = str;
     };
 
+private:
+    bool added_all_args() const { return added_args_ == ap_.count_args(); }
+
+public:
+
     void add(int v)
     {
         auto arg = ap_[added_args_++];
         while(arg.type == '%')
         {
-            if(added_args_ == ap_.count_args()) { 
+            if(added_all_args()){
                 throw std::invalid_argument("No more arg to escape when adding a integer."); 
             }
             arg = ap_[added_args_++];
@@ -55,7 +60,7 @@ class Msg
         auto arg = ap_[added_args_++];
         while(arg.type == '%')
         {
-            if(added_args_ == ap_.count_args()) { 
+            if(added_all_args()) {
                 throw std::invalid_argument("No more arg to escape when adding a floating integer.");
             }
             arg = ap_[added_args_++];
