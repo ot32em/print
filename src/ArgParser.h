@@ -39,6 +39,20 @@ class ArgParser
             [arg_s](ArgInfo ai){ return ai.type == arg_s; });
     };
 
+    ArgInfo next_nonescape_arg(std::size_t& next_pos) const
+    { 
+        auto arg = arg_infos_.at(next_pos++);
+        while(arg.type == '%')
+        {
+            if(next_pos == arg_infos_.size())
+            {
+                throw std::invalid_argument("No more non escape arg."); 
+            }
+            arg = arg_infos_.at(next_pos++);
+        }
+        return arg;
+    }
+
     ArgInfo operator[](std::size_t i) const
     {
         return arg_infos_.at(i);
