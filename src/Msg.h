@@ -7,11 +7,16 @@
 class Msg
 {public:
     enum class ArgType {Any, Str, Int, Float};
-    Msg(cstr msg): msg_(msg), ap_(msg), 
-                   added_args_(0), added_strs_(0), added_ints_(0), added_floats_(0),
-                   str_values_(ap_.count_args('s')),
-                   int_values_(ap_.count_args('d')),
-                   float_values_(ap_.count_args('f'))
+    Msg(cstr msg): 
+        msg_(msg), 
+        ap_(msg), 
+        added_args_(0), 
+        added_strs_(0), 
+        str_values_(ap_.count_args('s')),
+        added_ints_(0), 
+        int_values_(ap_.count_args('d')),
+        added_floats_(0),
+        float_values_(ap_.count_args('f'))
     {
     } 
 
@@ -20,10 +25,14 @@ class Msg
         auto arg = ap_[added_args_++];
         while(arg.type == '%')
         {
-            if(added_args_ == ap_.count_args()) { throw std::invalid_argument("No more arg to escape when adding a string."); }
+            if(added_args_ == ap_.count_args()) { 
+                throw std::invalid_argument("No more arg to escape when adding a string."); 
+            }
             arg = ap_[added_args_++];
         }
-        if(arg.type != 's') { throw std::invalid_argument("Adding a string, but msg arg type does not match."); }
+        if(arg.type != 's') { 
+            throw std::invalid_argument("Adding a string, but msg arg type does not match."); 
+        }
         str_values_[added_strs_++] = str;
     };
 
@@ -32,7 +41,9 @@ class Msg
         auto arg = ap_[added_args_++];
         while(arg.type == '%')
         {
-            if(added_args_ == ap_.count_args()) { throw std::invalid_argument("No more arg to escape when adding a integer."); }
+            if(added_args_ == ap_.count_args()) { 
+                throw std::invalid_argument("No more arg to escape when adding a integer."); 
+            }
             arg = ap_[added_args_++];
         }
         if(arg.type != 'd') { throw std::invalid_argument("Adding a integer, but msg arg type does not match."); }
@@ -44,7 +55,9 @@ class Msg
         auto arg = ap_[added_args_++];
         while(arg.type == '%')
         {
-            if(added_args_ == ap_.count_args()) { throw std::invalid_argument("No more arg to escape when adding a floating integer."); }
+            if(added_args_ == ap_.count_args()) { 
+                throw std::invalid_argument("No more arg to escape when adding a floating integer.");
+            }
             arg = ap_[added_args_++];
         }
         if(arg.type != 'f') { throw std::invalid_argument("Adding a floating integer, but msg arg type does not match."); }
