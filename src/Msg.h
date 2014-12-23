@@ -3,6 +3,7 @@
 #include "cstr.h"
 #include "cargseq.h"
 #include "ArgParser.h"
+#include "ArgValue.h"
 
 struct AddingWrongTypeArg : public std::invalid_argument
 {
@@ -24,12 +25,9 @@ class Msg
         msg_(msg),
         ap_(msg),
         added_args_(0),
-        added_strs_(0),
-        str_values_(ap_.count_args('s')),
-        added_ints_(0),
-        int_values_(ap_.count_args('d')),
-        added_floats_(0),
-        float_values_(ap_.count_args('f'))
+        av_(ap_.count_args('s'),
+            ap_.count_args('d'),
+            ap_.count_args('f'))
     {
     }
 
@@ -37,21 +35,21 @@ class Msg
     {
         auto arg = ap_.next_nonescape_arg(added_args_);
         validate_arg_type(arg, 's', "Adding a string");
-        str_values_[added_strs_++] = str;
+        av_.add(str);
     };
 
     void add(int v)
     {
         auto arg = ap_.next_nonescape_arg(added_args_);
         validate_arg_type(arg, 'd', "Adding a integer");
-        int_values_[added_ints_++] = (unsigned long long)v;
+        av_.add(v);
     }
 
     void add(double v)
     {
         auto arg = ap_.next_nonescape_arg(added_args_);
         validate_arg_type(arg, 'f', "Adding a floating number");
-        float_values_[added_floats_++] = v;
+        av_.add(v);
     }
 
     std::string str() const
@@ -60,28 +58,25 @@ class Msg
 
         const std::string src_msg(msg_.str());
         std::string dst_msg;
+        std::size_t merged_strs = 0,
+                    merged_ints = 0,
+                    merged_floats = 0;
         std::size_t submsg_begin = 0;
-        std::size_t merged_strs = 0;
-        std::size_t merged_ints = 0;
-        std::size_t merged_floats = 0;
         for(const auto& arg: ap_)
         {
             dst_msg += src_msg.substr(submsg_begin, arg.pos - submsg_begin);
             submsg_begin = arg.pos + 2;
             if(arg.type == 's')
             {
-                dst_msg += str_values_[merged_strs++];
+                dst_msg += av_.str_as_str(merged_strs++);
             }
             else if(arg.type == 'd')
             {
-                dst_msg += std::to_string(int_values_[merged_ints++]);
+                dst_msg += av_.int_as_str(merged_ints++);
             }
             else if(arg.type == 'f')
             {
-                char buf[32] = {};
-                float val = float_values_[merged_floats++];
-                sprintf(buf, "%.1f", val);
-                dst_msg += buf;
+                dst_msg += av_.float_as_str(merged_floats++);
             }
             else if(arg.type == '%')
             {
@@ -96,13 +91,6 @@ private:
     cstr msg_;
     ArgParser ap_;
     std::size_t added_args_;
-    std::vector<std::string> str_values_;
-    std::size_t added_strs_;
-
-    std::vector<unsigned long long> int_values_;
-    std::size_t added_ints_;
-
-    std::vector<double> float_values_;
-    std::size_t added_floats_;
+    ArgValue av_;
 };
 
