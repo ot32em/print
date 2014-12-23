@@ -11,7 +11,7 @@ struct AddingWrongTypeArg : public std::invalid_argument
 
 void validate_arg_type(const ArgParser::ArgInfo& arg, char c, const char* err_msg="")
 {
-    if(arg.type != c) 
+    if(arg.type != c)
     {
         throw AddingWrongTypeArg(err_msg);
     }
@@ -20,18 +20,18 @@ void validate_arg_type(const ArgParser::ArgInfo& arg, char c, const char* err_ms
 class Msg
 {public:
     enum class ArgType {Any, Str, Int, Float};
-    Msg(cstr msg): 
-        msg_(msg), 
-        ap_(msg), 
-        added_args_(0), 
-        added_strs_(0), 
+    Msg(cstr msg):
+        msg_(msg),
+        ap_(msg),
+        added_args_(0),
+        added_strs_(0),
         str_values_(ap_.count_args('s')),
-        added_ints_(0), 
+        added_ints_(0),
         int_values_(ap_.count_args('d')),
         added_floats_(0),
         float_values_(ap_.count_args('f'))
     {
-    } 
+    }
 
     void add(const char* str)
     {
@@ -68,20 +68,25 @@ class Msg
         {
             std::size_t right_pos = arg.pos;
             result += src.substr(left_pos, right_pos - left_pos);
-            if(arg.type == 's') {
-                result += str_values_[merged_strs++]; 
-            } else if(arg.type == 'd') {
-                result += std::to_string(int_values_[merged_ints++]); 
-            } else if(arg.type == 'f') {
+            if(arg.type == 's')
+            {
+                result += str_values_[merged_strs++];
+            }
+            else if(arg.type == 'd')
+            {
+                result += std::to_string(int_values_[merged_ints++]);
+            }
+            else if(arg.type == 'f')
+            {
                 char buf[32] = {};
                 float val = float_values_[merged_floats++];
                 sprintf(buf, "%.1f", val);
                 result += buf;
             }
-            else if(arg.type == '%') {
+            else if(arg.type == '%')
+            {
                 result += "%";
             }
-            
             left_pos = right_pos + 2;
         }
         result += src.substr(left_pos, src.size() - left_pos);
