@@ -1,3 +1,5 @@
+#pragma once
+
 class ArgValue
 {public:
     ArgValue(std::size_t str_count, std::size_t int_count, std::size_t float_count)

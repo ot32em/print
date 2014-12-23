@@ -1,9 +1,12 @@
+#pragma once
+
 #include <tuple>
 #include "cbit.h"
 #include "cstr.h"
 #include "cargseq.h"
 #include "ArgParser.h"
 #include "ArgValue.h"
+#include "ArgExtractor.h"
 
 struct AddingWrongTypeArg : public std::invalid_argument
 {
@@ -55,33 +58,16 @@ class Msg
     std::string str() const
     {
         if(added_args_ == 0) { return msg_.str(); }
-
         const std::string src_msg(msg_.str());
+
         std::string dst_msg;
-        std::size_t merged_strs = 0,
-                    merged_ints = 0,
-                    merged_floats = 0;
         std::size_t submsg_begin = 0;
-        for(const auto& arg: ap_)
+        ArgExtractor ae(av_);
+        for(const ArgParser::ArgInfo& arg: ap_)
         {
             dst_msg += src_msg.substr(submsg_begin, arg.pos - submsg_begin);
+            dst_msg += ae.extract_next(arg.type);
             submsg_begin = arg.pos + 2;
-            if(arg.type == 's')
-            {
-                dst_msg += av_.str_as_str(merged_strs++);
-            }
-            else if(arg.type == 'd')
-            {
-                dst_msg += av_.int_as_str(merged_ints++);
-            }
-            else if(arg.type == 'f')
-            {
-                dst_msg += av_.float_as_str(merged_floats++);
-            }
-            else if(arg.type == '%')
-            {
-                dst_msg += "%";
-            }
         }
         dst_msg += src_msg.substr(submsg_begin, src_msg.size() - submsg_begin);
         return dst_msg;
