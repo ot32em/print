@@ -36,7 +36,7 @@ class ArgParser
         return std::count_if(
             arg_infos_.begin(), 
             arg_infos_.end(), 
-            [arg_s](ArgInfo ai){ return ai.type == arg_s; });
+            [arg_s](const ArgInfo& ai){ return ai.type == arg_s; });
     };
 
     ArgInfo next_nonescape_arg(std::size_t& next_pos) const
