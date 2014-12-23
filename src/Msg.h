@@ -66,8 +66,8 @@ class Msg
         std::size_t merged_floats = 0;
         for(const auto& arg: ap_)
         {
-            std::size_t submsg_end = arg.pos;
-            dst_msg += src_msg.substr(submsg_begin, submsg_end - submsg_begin);
+            dst_msg += src_msg.substr(submsg_begin, arg.pos - submsg_begin);
+            submsg_begin = arg.pos + 2;
             if(arg.type == 's')
             {
                 dst_msg += str_values_[merged_strs++];
@@ -87,7 +87,6 @@ class Msg
             {
                 dst_msg += "%";
             }
-            submsg_begin = submsg_end + 2;
         }
         dst_msg += src_msg.substr(submsg_begin, src_msg.size() - submsg_begin);
         return dst_msg;
