@@ -60,14 +60,14 @@ class Msg
 
         const std::string src(msg_.str());
         std::string result;
-        std::size_t left_pos = 0;
+        std::size_t submsg_begin = 0;
         std::size_t merged_strs = 0;
         std::size_t merged_ints = 0;
         std::size_t merged_floats = 0;
         for(const auto& arg: ap_)
         {
-            std::size_t right_pos = arg.pos;
-            result += src.substr(left_pos, right_pos - left_pos);
+            std::size_t submsg_end = arg.pos;
+            result += src.substr(submsg_begin, submsg_end - submsg_begin);
             if(arg.type == 's')
             {
                 result += str_values_[merged_strs++];
@@ -87,9 +87,9 @@ class Msg
             {
                 result += "%";
             }
-            left_pos = right_pos + 2;
+            submsg_begin = submsg_end + 2;
         }
-        result += src.substr(left_pos, src.size() - left_pos);
+        result += src.substr(submsg_begin, src.size() - submsg_begin);
         return result;
     }
 
