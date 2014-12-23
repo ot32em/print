@@ -58,8 +58,8 @@ class Msg
     {
         if(added_args_ == 0) { return msg_.str(); }
 
-        const std::string src(msg_.str());
-        std::string result;
+        const std::string src_msg(msg_.str());
+        std::string dst_msg;
         std::size_t submsg_begin = 0;
         std::size_t merged_strs = 0;
         std::size_t merged_ints = 0;
@@ -67,30 +67,30 @@ class Msg
         for(const auto& arg: ap_)
         {
             std::size_t submsg_end = arg.pos;
-            result += src.substr(submsg_begin, submsg_end - submsg_begin);
+            dst_msg += src_msg.substr(submsg_begin, submsg_end - submsg_begin);
             if(arg.type == 's')
             {
-                result += str_values_[merged_strs++];
+                dst_msg += str_values_[merged_strs++];
             }
             else if(arg.type == 'd')
             {
-                result += std::to_string(int_values_[merged_ints++]);
+                dst_msg += std::to_string(int_values_[merged_ints++]);
             }
             else if(arg.type == 'f')
             {
                 char buf[32] = {};
                 float val = float_values_[merged_floats++];
                 sprintf(buf, "%.1f", val);
-                result += buf;
+                dst_msg += buf;
             }
             else if(arg.type == '%')
             {
-                result += "%";
+                dst_msg += "%";
             }
             submsg_begin = submsg_end + 2;
         }
-        result += src.substr(submsg_begin, src.size() - submsg_begin);
-        return result;
+        dst_msg += src_msg.substr(submsg_begin, src_msg.size() - submsg_begin);
+        return dst_msg;
     }
 
 private:
