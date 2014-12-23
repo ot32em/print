@@ -88,15 +88,6 @@ class Msg
         return result;
     }
 
-    std::size_t count_args(ArgType t = ArgType::Any) const 
-    { 
-        if(t == ArgType::Str) { return ap_.count_args('s'); }
-        if(t == ArgType::Int) { return ap_.count_args('d'); }
-        if(t == ArgType::Float) { return ap_.count_args('f'); }
-        if(t == ArgType::Any) { return ap_.count_args('%'); }
-        throw std::invalid_argument("count_args meet unknown type");
-    } 
-
 private:
     cstr msg_;
     ArgParser ap_;

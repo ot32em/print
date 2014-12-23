@@ -13,16 +13,5 @@ go_bandit([]() {
             AssertThat(msg.str(), 
                 Equals("Hello world, This is 7th day to drink 99.9% orange juice."));
         });
-        describe("count args", [&]() {
-            it("counts str", [&]() {
-                AssertThat(msg.count_args(Msg::ArgType::Str), Equals(2));
-            });
-            it("counts int", [&]() {
-                AssertThat(msg.count_args(Msg::ArgType::Int), Equals(1));
-            });
-            it("counts float", [&]() {
-                AssertThat(msg.count_args(Msg::ArgType::Float), Equals(1));
-            });
-        });
     });
 });
