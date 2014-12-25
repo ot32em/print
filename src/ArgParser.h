@@ -64,6 +64,8 @@ class ArgParser
     std::vector<ArgInfo>::const_iterator begin() const { return arg_infos_.begin(); }
     std::vector<ArgInfo>::const_iterator end() const { return arg_infos_.end(); }
 
+    std::vector<ArgInfo> arg_info_list() const { return arg_infos_; }
+
 private:
     cstr msg_;
     std::vector<ArgInfo> arg_infos_;

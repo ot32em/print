@@ -6,7 +6,7 @@
 #include "cargseq.h"
 #include "ArgParser.h"
 #include "ArgValue.h"
-#include "ArgExtractor.h"
+#include "MsgGenerator.h"
 
 struct AddingWrongTypeArg : public std::invalid_argument
 {
@@ -58,19 +58,8 @@ class Msg
     std::string str() const
     {
         if(added_args_ == 0) { return msg_.str(); }
-        const std::string src_msg(msg_.str());
-
-        std::string dst_msg;
-        std::size_t submsg_begin = 0;
-        ArgExtractor ae(av_);
-        for(const ArgParser::ArgInfo& arg: ap_)
-        {
-            dst_msg += src_msg.substr(submsg_begin, arg.pos - submsg_begin);
-            dst_msg += ae.extract_next(arg.type);
-            submsg_begin = arg.pos + 2;
-        }
-        dst_msg += src_msg.substr(submsg_begin, src_msg.size() - submsg_begin);
-        return dst_msg;
+        MsgGenerator mg(msg_, ap_.arg_info_list(), av_);
+        return mg.generate();
     }
 
 private:
