@@ -16,4 +16,4 @@ namespace symbol
     constexpr char Unknown() { return '?'; }
 }
 
-
+constexpr const char* EscAsString() { return "%"; }

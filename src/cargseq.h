@@ -2,6 +2,7 @@
 
 #include "cstr.h"
 #include "cbit.h"
+#include "ArgType.h"
 
 using seq_t = unsigned long long;
 

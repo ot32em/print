@@ -22,7 +22,7 @@ class ArgExtractor
             case symbol::Float():
                 return  av_.float_as_str(extracted_floats_++);
             case symbol::Esc():
-                return symbol::Esc();
+                return EscAsString();
             default:
                 std::string err_msg = std::string("detected type: ") + "[" + type + "]";
                 err_msg += ". extract a unknown type arg.";

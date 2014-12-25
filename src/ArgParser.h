@@ -24,14 +24,14 @@ class ArgParser
         }
     }
 
-    std::size_t count_args(char arg_s=symbol::Any()) const
+    std::size_t count_args(char arg_symbol=symbol::Any()) const
     {
-        if(arg_s == symbol::Any()) { return arg_tokens_.size(); }
+        if(arg_symbol == symbol::Any()) { return arg_tokens_.size(); }
 
         return std::count_if(
             arg_tokens_.begin(), 
             arg_tokens_.end(), 
-            [arg_s](const ArgToken& ai){ return ai.type == arg_s; });
+            [arg_symbol](const ArgToken& arg){ return arg.type == arg_symbol; });
     };
 
     ArgToken next_nonescape_arg(std::size_t& next_pos) const
