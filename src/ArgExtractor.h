@@ -24,7 +24,9 @@ class ArgExtractor
             case '%':
                 return "%";
             default:
-                throw std::invalid_argument("extract a unknown type arg.");
+                std::string err_msg = std::string("detected type: ") + "[" + type + "]";
+                err_msg += ". extract a unknown type arg.";
+                throw std::invalid_argument(err_msg.c_str());
         }
     }
 private:
