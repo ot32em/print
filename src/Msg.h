@@ -35,22 +35,22 @@ class Msg
 
     void add(const char* str)
     {
-        auto arg = ap_.next_nonescape_arg(added_args_);
-        validate_arg_type(arg, symbol::Str(), "Adding a string");
+        std::size_t arg_i = ap_.next_nonescape_arg_i(added_args_++);
+        validate_arg_type(ap_[arg_i], symbol::Str(), "Adding a string");
         av_.add(str);
     };
 
     void add(int v)
     {
-        auto arg = ap_.next_nonescape_arg(added_args_);
-        validate_arg_type(arg, symbol::Int(), "Adding a integer");
+        std::size_t arg_i = ap_.next_nonescape_arg_i(added_args_++);
+        validate_arg_type(ap_[arg_i], symbol::Int(), "Adding a integer");
         av_.add(v);
     }
 
     void add(double v)
     {
-        auto arg = ap_.next_nonescape_arg(added_args_);
-        validate_arg_type(arg, symbol::Float(), "Adding a floating number");
+        std::size_t arg_i = ap_.next_nonescape_arg_i(added_args_++);
+        validate_arg_type(ap_[arg_i], symbol::Float(), "Adding a floating number");
         av_.add(v);
     }
 

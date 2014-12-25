@@ -34,18 +34,16 @@ class ArgParser
             [arg_symbol](const ArgToken& arg){ return arg.type == arg_symbol; });
     };
 
-    ArgToken next_nonescape_arg(std::size_t& next_pos) const
+    std::size_t next_nonescape_arg_i(std::size_t next_i = 0) const
     { 
-        auto arg = arg_tokens_.at(next_pos++);
-        while(arg.type == symbol::Esc())
+        for(std::size_t i = next_i; i != arg_tokens_.size(); i++) 
         {
-            if(next_pos == arg_tokens_.size())
+            if(arg_tokens_.at(i).type != symbol::Esc())
             {
-                throw std::invalid_argument("No more non escape arg."); 
+                return i;
             }
-            arg = arg_tokens_.at(next_pos++);
         }
-        return arg;
+        throw std::invalid_argument("No more non escape arg.");
     }
 
     ArgToken operator[](std::size_t i) const
