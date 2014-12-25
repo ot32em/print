@@ -27,30 +27,30 @@ class Msg
         msg_(msg),
         ap_(msg),
         added_args_(0),
-        av_(ap_.count_args('s'),
-            ap_.count_args('d'),
-            ap_.count_args('f'))
+        av_(ap_.count_args(symbol::Str()),
+            ap_.count_args(symbol::Int()),
+            ap_.count_args(symbol::Float()))
     {
     }
 
     void add(const char* str)
     {
         auto arg = ap_.next_nonescape_arg(added_args_);
-        validate_arg_type(arg, 's', "Adding a string");
+        validate_arg_type(arg, symbol::Str(), "Adding a string");
         av_.add(str);
     };
 
     void add(int v)
     {
         auto arg = ap_.next_nonescape_arg(added_args_);
-        validate_arg_type(arg, 'd', "Adding a integer");
+        validate_arg_type(arg, symbol::Int(), "Adding a integer");
         av_.add(v);
     }
 
     void add(double v)
     {
         auto arg = ap_.next_nonescape_arg(added_args_);
-        validate_arg_type(arg, 'f', "Adding a floating number");
+        validate_arg_type(arg, symbol::Float(), "Adding a floating number");
         av_.add(v);
     }
 

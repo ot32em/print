@@ -8,10 +8,12 @@ struct ArgToken
 
 namespace symbol
 {
-    constexpr char any() { return '*'; }
+    constexpr char Any() { return '*'; }
     constexpr char Str() { return 's'; }
     constexpr char Int() { return 'd'; }
     constexpr char Float() { return 'f'; }
     constexpr char Esc() { return '%'; }
+    constexpr char Unknown() { return '?'; }
 }
+
 

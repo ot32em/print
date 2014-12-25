@@ -15,14 +15,14 @@ class ArgExtractor
     {
         switch(type)
         {
-            case 's': 
+            case symbol::Str(): 
                 return av_.str_as_str(extracted_strs_++);
-            case 'd': 
+            case symbol::Int(): 
                 return av_.int_as_str(extracted_ints_++);
-            case 'f':
+            case symbol::Float():
                 return  av_.float_as_str(extracted_floats_++);
-            case '%':
-                return "%";
+            case symbol::Esc():
+                return symbol::Esc();
             default:
                 std::string err_msg = std::string("detected type: ") + "[" + type + "]";
                 err_msg += ". extract a unknown type arg.";
