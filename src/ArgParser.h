@@ -1,15 +1,10 @@
 #pragma once
 #include "cstr.h"
 #include "cargseq.h"
-
+#include "ArgType.h"
 
 class ArgParser
 {public:
-    struct ArgInfo
-    {
-        char type;
-        std::size_t pos;
-    };
 
     ArgParser(cstr msg)
         :msg_(msg)
@@ -20,55 +15,55 @@ class ArgParser
         seq_t float_seq = arg_seq(msg, 'f');
         seq_t escape_seq = arg_seq(msg, '%');
 
-        arg_infos_.resize(count_bit1(all_seq));
-        for(std::size_t i = 0; i < arg_infos_.size(); i++)
+        arg_tokens_.resize(count_bit1(all_seq));
+        for(std::size_t i = 0; i < arg_tokens_.size(); i++)
         {
-            arg_infos_[i].type = arg_type_at_bit(i, str_seq, 's', int_seq, 'd', float_seq, 'f', escape_seq, '%');
-            assert(arg_infos_[i].type != '?' && "detected unknown symbol");
-            arg_infos_[i].pos = pos_of_nth_arg(msg, i);
+            arg_tokens_[i].type = arg_type_at_bit(i, str_seq, 's', int_seq, 'd', float_seq, 'f', escape_seq, '%');
+            assert(arg_tokens_[i].type != '?' && "detected unknown symbol");
+            arg_tokens_[i].pos = pos_of_nth_arg(msg, i);
         }
     }
 
     std::size_t count_args(char arg_s='*') const
     {
-        if(arg_s == '*') { return arg_infos_.size(); }
+        if(arg_s == '*') { return arg_tokens_.size(); }
 
         return std::count_if(
-            arg_infos_.begin(), 
-            arg_infos_.end(), 
-            [arg_s](const ArgInfo& ai){ return ai.type == arg_s; });
+            arg_tokens_.begin(), 
+            arg_tokens_.end(), 
+            [arg_s](const ArgToken& ai){ return ai.type == arg_s; });
     };
 
-    ArgInfo next_nonescape_arg(std::size_t& next_pos) const
+    ArgToken next_nonescape_arg(std::size_t& next_pos) const
     { 
-        auto arg = arg_infos_.at(next_pos++);
+        auto arg = arg_tokens_.at(next_pos++);
         while(arg.type == '%')
         {
-            if(next_pos == arg_infos_.size())
+            if(next_pos == arg_tokens_.size())
             {
                 throw std::invalid_argument("No more non escape arg."); 
             }
-            arg = arg_infos_.at(next_pos++);
+            arg = arg_tokens_.at(next_pos++);
         }
         return arg;
     }
 
-    ArgInfo operator[](std::size_t i) const
+    ArgToken operator[](std::size_t i) const
     {
-        return arg_infos_.at(i);
+        return arg_tokens_.at(i);
     }
 
-    std::vector<ArgInfo>::iterator begin() { return arg_infos_.begin(); }
-    std::vector<ArgInfo>::iterator end() { return arg_infos_.end(); }
+    std::vector<ArgToken>::iterator begin() { return arg_tokens_.begin(); }
+    std::vector<ArgToken>::iterator end() { return arg_tokens_.end(); }
 
-    std::vector<ArgInfo>::const_iterator begin() const { return arg_infos_.begin(); }
-    std::vector<ArgInfo>::const_iterator end() const { return arg_infos_.end(); }
+    std::vector<ArgToken>::const_iterator begin() const { return arg_tokens_.begin(); }
+    std::vector<ArgToken>::const_iterator end() const { return arg_tokens_.end(); }
 
-    std::vector<ArgInfo> arg_info_list() const { return arg_infos_; }
+    std::vector<ArgToken> arg_tokens() const { return arg_tokens_; }
 
 private:
     cstr msg_;
-    std::vector<ArgInfo> arg_infos_;
+    std::vector<ArgToken> arg_tokens_;
 };
 
 

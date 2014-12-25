@@ -1,6 +1,7 @@
 #pragma once
 
 #include "cstr.h"
+#include "ArgType.h"
 #include "ArgExtractor.h"
 #include "ArgValue.h"
 
@@ -8,15 +9,15 @@ class MsgGenerator
 {public:
     MsgGenerator(
         cstr s,
-        const std::vector<ArgParser::ArgInfo>& arg_info_list,
+        const std::vector<ArgToken>& arg_tokens,
         const ArgValue& av)
-        : src_msg_(s.str()), arg_info_list_(arg_info_list), ae_(av)
+        : src_msg_(s.str()), arg_tokens_(arg_tokens), ae_(av)
     {}
 
     std::string generate()
     {
         std::size_t submsg_begin = 0;
-        for(const ArgParser::ArgInfo& arg: arg_info_list_)
+        for(const ArgToken& arg: arg_tokens_)
         {
             dst_msg_ += src_msg_.substr(submsg_begin, arg.pos - submsg_begin);
             dst_msg_ += ae_.extract_next(arg.type);
@@ -27,7 +28,7 @@ class MsgGenerator
     }
 
 private:
-    const std::vector<ArgParser::ArgInfo> arg_info_list_;
+    const std::vector<ArgToken> arg_tokens_;
     const std::string src_msg_;
     ArgExtractor ae_;
     std::string dst_msg_;

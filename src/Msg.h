@@ -13,7 +13,7 @@ struct AddingWrongTypeArg : public std::invalid_argument
     AddingWrongTypeArg(const char* msg): std::invalid_argument(msg){}
 };
 
-void validate_arg_type(const ArgParser::ArgInfo& arg, char c, const char* err_msg="")
+void validate_arg_type(const ArgToken& arg, char c, const char* err_msg="")
 {
     if(arg.type != c)
     {
@@ -57,7 +57,7 @@ class Msg
     std::string str() const
     {
         if(added_args_ == 0) { return msg_.str(); }
-        MsgGenerator mg(msg_, ap_.arg_info_list(), av_);
+        MsgGenerator mg(msg_, ap_.arg_tokens(), av_);
         return mg.generate();
     }
 
