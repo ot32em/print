@@ -23,7 +23,6 @@ void validate_arg_type(const ArgParser::ArgInfo& arg, char c, const char* err_ms
 
 class Msg
 {public:
-    enum class ArgType {Any, Str, Int, Float};
     Msg(cstr msg):
         msg_(msg),
         ap_(msg),
