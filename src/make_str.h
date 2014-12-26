@@ -15,3 +15,8 @@ std::string make_str(ArgsT... args)
     return oss.str();
 }
 
+template<typename JointerT, typename... ArgsT>
+std::string join_str(JointerT, ArgsT... args)
+{
+    return "";
+}

@@ -21,4 +21,24 @@ go_bandit([]() {
             AssertThat(str, Equals(std::string("Hello world. This is OT's 7th speaking.")));
         });
     });
+    describe("join_str", [&]() {
+        it("jointer is string", [&]() {
+            std::string str = join_str("YA", 1,2,3,4,5);
+            AssertThat(str, Equals(std::string("1YA2YA3YA4YA5")));
+        });
+        it("jointer is a int", [&]() {
+            std::string str = join_str(3345678, "Hi", "Yo", "Man", "Hey", "Hey");
+            AssertThat(str, Equals(std::string("Hi3345678Yo3345678Man3345678Hey3345678Hey")));
+        });
+
+        it("jointee of different types", [&]() {
+            std::string str = join_str(99, "Hi", 123, "Man", 456, "Hey");
+            AssertThat(str, Equals(std::string("Hi9912399Man9945699Hey")));
+        });
+        
+        it("Join nothing", [&]() {
+            std::string str = join_str(111);
+            AssertThat(str, Equals(std::string()));
+        });
+    });
 });
