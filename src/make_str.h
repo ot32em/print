@@ -15,8 +15,27 @@ std::string make_str(ArgsT... args)
     return oss.str();
 }
 
-template<typename JointerT, typename... ArgsT>
-std::string join_str(JointerT, ArgsT... args)
+
+template<typename JointerT>
+void join_stream(std::ostream& out, const JointerT& jointer) { }
+
+template<typename JointerT, typename T>
+void join_stream(std::ostream& out, const JointerT& jointer, const T& final_val)
 {
-    return "";
+    out << final_val;
+}
+
+template<typename JointerT, typename T, typename... ArgsT>
+void join_stream(std::ostream& out, const JointerT& jointer, const T& val, ArgsT... args)
+{
+    out << val << jointer;
+    join_stream(out, jointer, args...);
+}
+
+template<typename JointerT, typename... ArgsT>
+std::string join_str(const JointerT& jointer, ArgsT... args)
+{
+    std::ostringstream oss;
+    join_stream(oss, jointer, args...);
+    return oss.str();
 }
