@@ -12,20 +12,20 @@ class ArgExtractor
         extracted_floats_(0)
     {}
 
-    std::string extract_next(char type)
+    std::string extract_next(char arg_symbol)
     {
-        switch(type)
+        switch(arg_symbol)
         {
-            case symbol::Str(): 
+            case Symbol::Str(): 
                 return av_.str_as_str(extracted_strs_++);
-            case symbol::Int(): 
+            case Symbol::Int(): 
                 return av_.int_as_str(extracted_ints_++);
-            case symbol::Float():
+            case Symbol::Float():
                 return  av_.float_as_str(extracted_floats_++);
-            case symbol::Esc():
+            case Symbol::Esc():
                 return EscAsString();
             default:
-                std::string err_msg = make_str("Extract a arg of unknown type: ", type);
+                std::string err_msg = make_str("Extract a arg of unknown type: ", arg_symbol);
                 throw std::invalid_argument(err_msg.c_str());
         }
     }

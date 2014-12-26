@@ -14,39 +14,39 @@ class ArgParser
     
     void parse()
     {
-        seq_t all_seq = arg_seq(msg_, symbol::Any());
-        seq_t str_seq = arg_seq(msg_, symbol::Str());
-        seq_t int_seq = arg_seq(msg_, symbol::Int());
-        seq_t float_seq = arg_seq(msg_, symbol::Float());
-        seq_t escape_seq = arg_seq(msg_, symbol::Esc());
+        seq_t all_seq = arg_seq(msg_, Symbol::Any());
+        seq_t str_seq = arg_seq(msg_, Symbol::Str());
+        seq_t int_seq = arg_seq(msg_, Symbol::Int());
+        seq_t float_seq = arg_seq(msg_, Symbol::Float());
+        seq_t escape_seq = arg_seq(msg_, Symbol::Esc());
 
         arg_tokens_.resize(count_bit1(all_seq));
         for(std::size_t i = 0; i < arg_tokens_.size(); i++)
         {
-            arg_tokens_[i].type = arg_type_at_bit(i, str_seq, symbol::Str(), 
-                                                     int_seq, 'd', 
-                                                     float_seq, symbol::Float(), 
-                                                     escape_seq, symbol::Esc());
-            assert(arg_tokens_[i].type != symbol::Unknown() && "Detected unknown symbol when ArgParser parsing.");
+            arg_tokens_[i].symbol = arg_type_at_bit(i, str_seq, Symbol::Str(),
+                                                     int_seq, Symbol::Int(),
+                                                     float_seq, Symbol::Float(),
+                                                     escape_seq, Symbol::Esc());
+            assert(arg_tokens_[i].symbol != Symbol::Unknown() && "Detected unknown symbol when ArgParser parsing.");
             arg_tokens_[i].pos = pos_of_nth_arg(msg_, i);
         }
     }
 
-    std::size_t count_args(char arg_symbol=symbol::Any()) const
+    std::size_t count_args(char arg_symbol=Symbol::Any()) const
     {
-        if(arg_symbol == symbol::Any()) { return arg_tokens_.size(); }
+        if(arg_symbol == Symbol::Any()) { return arg_tokens_.size(); }
 
         return std::count_if(
             arg_tokens_.begin(), 
             arg_tokens_.end(), 
-            [arg_symbol](const ArgToken& arg){ return arg.type == arg_symbol; });
+            [arg_symbol](const ArgToken& arg){ return arg.symbol == arg_symbol; });
     };
 
     std::size_t next_nonescape_arg_i(std::size_t next_i = 0) const
     { 
         for(std::size_t i = next_i; i != arg_tokens_.size(); i++) 
         {
-            if(arg_tokens_.at(i).type != symbol::Esc())
+            if(arg_tokens_.at(i).symbol != Symbol::Esc())
             {
                 return i;
             }

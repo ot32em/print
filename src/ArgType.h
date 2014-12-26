@@ -2,11 +2,11 @@
 
 struct ArgToken
 {
-    char type;
+    char symbol;
     std::size_t pos;
 };
 
-namespace symbol
+namespace Symbol
 {
     constexpr char Any() { return '*'; }
     constexpr char Str() { return 's'; }

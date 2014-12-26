@@ -20,7 +20,7 @@ class MsgGenerator
         for(const ArgToken& arg: arg_tokens_)
         {
             dst_msg_ += src_msg_.substr(submsg_begin, arg.pos - submsg_begin);
-            dst_msg_ += ae_.extract_next(arg.type);
+            dst_msg_ += ae_.extract_next(arg.symbol);
             submsg_begin = arg.pos + 2;
         }
         dst_msg_ += src_msg_.substr(submsg_begin, src_msg_.size() - submsg_begin);
