@@ -1,8 +1,10 @@
+#pragma once
+
 #include <iostream>
 #include <sstream>
 #include <string>
 
-void make_stream(std::ostream& out) { }
+inline void make_stream(std::ostream& out) { }
 
 template<typename T, typename... ArgsT>
 void make_stream(std::ostream& out, const T& val, ArgsT... args)
