@@ -9,18 +9,26 @@ class ArgParser
     ArgParser(cstr msg)
         :msg_(msg)
     {
-        seq_t all_seq = arg_seq(msg, symbol::Any());
-        seq_t str_seq = arg_seq(msg, symbol::Str());
-        seq_t int_seq = arg_seq(msg, symbol::Int());
-        seq_t float_seq = arg_seq(msg, symbol::Float());
-        seq_t escape_seq = arg_seq(msg, symbol::Esc());
+        parse();
+    }
+    
+    void parse()
+    {
+        seq_t all_seq = arg_seq(msg_, symbol::Any());
+        seq_t str_seq = arg_seq(msg_, symbol::Str());
+        seq_t int_seq = arg_seq(msg_, symbol::Int());
+        seq_t float_seq = arg_seq(msg_, symbol::Float());
+        seq_t escape_seq = arg_seq(msg_, symbol::Esc());
 
         arg_tokens_.resize(count_bit1(all_seq));
         for(std::size_t i = 0; i < arg_tokens_.size(); i++)
         {
-            arg_tokens_[i].type = arg_type_at_bit(i, str_seq, symbol::Str(), int_seq, 'd', float_seq, symbol::Float(), escape_seq, symbol::Esc());
-            assert(arg_tokens_[i].type != symbol::Unknown() && "detected unknown symbol");
-            arg_tokens_[i].pos = pos_of_nth_arg(msg, i);
+            arg_tokens_[i].type = arg_type_at_bit(i, str_seq, symbol::Str(), 
+                                                     int_seq, 'd', 
+                                                     float_seq, symbol::Float(), 
+                                                     escape_seq, symbol::Esc());
+            assert(arg_tokens_[i].type != symbol::Unknown() && "Detected unknown symbol when ArgParser parsing.");
+            arg_tokens_[i].pos = pos_of_nth_arg(msg_, i);
         }
     }
 
