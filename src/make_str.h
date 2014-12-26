@@ -1,4 +1,3 @@
-
 void make_stream(std::ostream& out) { }
 
 template<typename T, typename... ArgsT>
