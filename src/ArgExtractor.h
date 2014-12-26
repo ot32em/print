@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ArgValue.h"
+#include "make_str.h"
 
 class ArgExtractor
 {public:
@@ -24,8 +25,7 @@ class ArgExtractor
             case symbol::Esc():
                 return EscAsString();
             default:
-                std::string err_msg = std::string("detected type: ") + "[" + type + "]";
-                err_msg += ". extract a unknown type arg.";
+                std::string err_msg = make_str("Extract a arg of unknown type: ", type);
                 throw std::invalid_argument(err_msg.c_str());
         }
     }
