@@ -3,9 +3,9 @@
 #include "ArgValue.h"
 #include "make_str.h"
 
-class ArgExtractor
+class ArgValueExtractor
 {public:
-    ArgExtractor(const ArgValue& av)
+    ArgValueExtractor(const ArgValue& av)
         :av_(av),
         extracted_strs_(0),
         extracted_ints_(0),

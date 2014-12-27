@@ -2,27 +2,22 @@
 
 #include "cstr.h"
 #include "ArgType.h"
-#include "ArgExtractor.h"
+#include "ArgValueExtractor.h"
 #include "ArgValue.h"
 
 class MsgGenerator
 {public:
     MsgGenerator(
-        cstr s,
-        const std::vector<ArgToken>& arg_tokens,
-        const ArgValue& av)
+        cstr s, const std::vector<ArgToken>& arg_tokens, const ArgValue& av)
         : 
-		src_msg_(s.str()), 
-		arg_tokens_(arg_tokens), 
-		av_(av)
-    {}
+		src_msg_(s.str()), arg_tokens_(arg_tokens), av_(av) {}
 
     std::string generate() const
     {
 		if(arg_tokens_.empty()) { return src_msg_; }
 
 		std::string dst_msg;
-		ArgExtractor ae(av_);
+		ArgValueExtractor ae(av_);
         dst_msg += head_substr(arg_tokens_.front());
 		dst_msg += ae.extract_next(arg_tokens_.front().symbol);
         for(std::size_t i = 1; i != arg_tokens_.size(); i++)
