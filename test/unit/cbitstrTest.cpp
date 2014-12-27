@@ -30,4 +30,13 @@ go_bandit([&]() {
             static_assert(bits_from_str(cstr(BITSTR_64W)) & bit_at(60,62), "byte 8 of");
         });
     });
+
+    describe("str_from_bits", [&]() {
+        it("", [&]() {
+            AssertThat(
+                str_from_bits(bit_at(0,1,4,5,9,24,29,30,31,32,33,34,36,37,38,39,40,41,42,46,48,52,60,62)),
+                Equals(std::string(BITSTR_64W))
+            );
+        });
+    });
 });
