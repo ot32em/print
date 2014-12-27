@@ -32,3 +32,4 @@ build/
 
 # Vi tmp
 *.swp
+*~
