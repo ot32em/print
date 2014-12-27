@@ -33,7 +33,7 @@ go_bandit([](){
         it("prints message with floating numbers", [&]()
         {
             print::f(out, "The pi is %f. The half is %f.", 3.14, 0.5);
-            AssertThat(out.str(), Equals("The pi is 3.14. The half is 0.5."));
+            AssertThat(out.str(), Equals("The pi is 3.1. The half is 0.5."));
         });
 
         describe("with mixed arguments.", [&]()
