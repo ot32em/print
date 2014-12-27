@@ -4,7 +4,6 @@
 #include "cbit.h"
 #include "ArgType.h"
 
-using seq_t = unsigned long long;
 
 constexpr seq_t 
 arg_seq(cstr str, char arg_c = Symbol::Any(), char esc_c = Symbol::Esc(), unsigned int found_args = 0, unsigned int i = 0)
