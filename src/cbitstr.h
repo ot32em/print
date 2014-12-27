@@ -19,11 +19,11 @@ constexpr seq_t bits_from_str(cstr str, std::size_t i = 0)
 
 std::string str_from_bits(seq_t bits)
 {
-    return "";
     std::string s(64, '0');
     for(std::size_t i = 0; bits; bits >>= 1) 
     {
         if(bits & 1) { s[63 - i] = '1'; }
+        i++;
     }
     return s;
 }
