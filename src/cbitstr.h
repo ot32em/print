@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdexcept>
+#include <algorithm>
 #include "cbit.h"
 #include "cstr.h"
 
@@ -17,13 +18,12 @@ constexpr seq_t bits_from_str(cstr str, std::size_t i = 0)
             throw std::invalid_argument("bits_from_str only accept cstr within 0 or 1 char.");
 }
 
-std::string str_from_bits(seq_t bits)
+void fill_from_bits(char (&s)[65], seq_t bits)
 {
-    std::string s(64, '0');
+    std::fill(std::begin(s), std::end(s)-1, '0');
     for(std::size_t i = 0; bits; bits >>= 1) 
     {
         if(bits & 1) { s[63 - i] = '1'; }
         i++;
     }
-    return s;
 }

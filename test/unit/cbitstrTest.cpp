@@ -48,10 +48,9 @@ go_bandit([&]() {
 
     describe("str_from_bits", [&]() {
         it("", [&]() {
-            AssertThat(
-                str_from_bits(bit_at(0,4,9,24,29,30,31,32,33,34,35,36,37,38,39,40,41,42,46,48,52,60,62)),
-                Equals(std::string(BITSTR_64W))
-            );
+            char s[65] = {};
+            fill_from_bits(s, bit_at(0,4,9,24,29,30,31,32,33,34,35,36,37,38,39,40,41,42,46,48,52,60,62));
+            AssertThat(s, Equals(BITSTR_64W));
         });
     });
 });
