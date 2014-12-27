@@ -18,20 +18,23 @@ class MsgGenerator
 
         std::string dst_msg;
         ArgValueExtractor ae(av_);
-        dst_msg += head_substr(arg_tokens_.front());
-        dst_msg += ae.extract_next(arg_tokens_.front().symbol);
+        dst_msg += head_substr();
+        dst_msg += ae.extract_next(head_arg().symbol);
         for(std::size_t i = 1; i != arg_tokens_.size(); i++)
         {
-            const auto& prev_arg = arg_tokens_[i-1];
-            const auto& curr_arg = arg_tokens_[i];
-            dst_msg += substr_between_args(prev_arg, curr_arg);
-            dst_msg += ae.extract_next(curr_arg.symbol);
+            dst_msg += substr_between_args(prev_arg(i), curr_arg(i));
+            dst_msg += ae.extract_next(curr_arg(i).symbol);
         }
-        dst_msg += tail_substr(arg_tokens_.back());
+        dst_msg += last_substr();
         return dst_msg;
     }
 
 private:
+    const ArgToken& head_arg() const { return arg_tokens_.front(); }
+    const ArgToken& prev_arg(std::size_t i) const { return arg_tokens_[i-1]; }
+    const ArgToken& curr_arg(std::size_t i) const { return arg_tokens_[i]; }
+    const ArgToken& last_arg() const { return arg_tokens_.back(); }
+
     std::string substr_between_args(const ArgToken& lhs_arg, const ArgToken& rhs_arg) const
     {
         auto msg_begin = lhs_arg.pos + 2;
@@ -39,14 +42,14 @@ private:
         return src_msg_.substr(msg_begin, msg_len);
     }
 
-    std::string head_substr(const ArgToken& first_arg) const
+    std::string head_substr() const
     {
-        return src_msg_.substr(0, first_arg.pos);
+        return src_msg_.substr(0, head_arg().pos);
     }
 
-    std::string tail_substr(const ArgToken& last_arg) const
+    std::string last_substr() const
     {
-        auto msg_begin = last_arg.pos + 2;
+        auto msg_begin = last_arg().pos + 2;
         auto msg_len = src_msg_.length() - msg_begin;
         return src_msg_.substr(msg_begin, msg_len);
     }
