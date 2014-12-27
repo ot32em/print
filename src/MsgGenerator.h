@@ -9,8 +9,7 @@ class MsgGenerator
 {public:
     MsgGenerator(
         cstr s, const std::vector<ArgToken>& arg_tokens, const ArgValue& av)
-        :
-        src_msg_(s.str()), arg_tokens_(arg_tokens), av_(av) {}
+        :src_msg_(s.str()), arg_tokens_(arg_tokens), av_(av) {}
 
     std::string generate() const
     {
