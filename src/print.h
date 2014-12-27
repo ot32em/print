@@ -5,7 +5,7 @@
 
 namespace print
 {
-    Msg& m(Msg& msg)
+    inline Msg& m(Msg& msg)
     {
         return msg;
     }

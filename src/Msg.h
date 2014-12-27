@@ -13,7 +13,7 @@ struct AddingWrongTypeArg : public std::invalid_argument
     AddingWrongTypeArg(const char* msg): std::invalid_argument(msg){}
 };
 
-void validate_arg_type(const ArgToken& arg, char c, const char* err_msg="")
+inline void validate_arg_type(const ArgToken& arg, char c, const char* err_msg="")
 {
     if(arg.symbol != c)
     {
