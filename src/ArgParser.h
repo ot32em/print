@@ -11,7 +11,7 @@ class ArgParser
     {
         parse();
     }
-    
+   
     void parse()
     {
         seq_t all_seq = arg_seq(msg_, Symbol::Any());
@@ -23,10 +23,13 @@ class ArgParser
         arg_tokens_.resize(count_bit1(all_seq));
         for(std::size_t i = 0; i < arg_tokens_.size(); i++)
         {
-            arg_tokens_[i].symbol = arg_type_at_bit(i, str_seq, Symbol::Str(),
-                                                     int_seq, Symbol::Int(),
-                                                     float_seq, Symbol::Float(),
-                                                     escape_seq, Symbol::Esc());
+            arg_tokens_[i].symbol = arg_type_at_bit(
+				i,
+				str_seq, Symbol::Str(),
+				int_seq, Symbol::Int(),
+				float_seq, Symbol::Float(),
+				escape_seq, Symbol::Esc()
+			);
             assert(arg_tokens_[i].symbol != Symbol::Unknown() && "Detected unknown symbol when ArgParser parsing.");
             arg_tokens_[i].pos = pos_of_nth_arg(msg_, i);
         }
@@ -37,14 +40,17 @@ class ArgParser
         if(arg_symbol == Symbol::Any()) { return arg_tokens_.size(); }
 
         return std::count_if(
-            arg_tokens_.begin(), 
-            arg_tokens_.end(), 
-            [arg_symbol](const ArgToken& arg){ return arg.symbol == arg_symbol; });
+            arg_tokens_.begin(),
+            arg_tokens_.end(),
+            [arg_symbol](const ArgToken& arg){
+				return arg.symbol == arg_symbol;
+			}
+		);
     };
 
     std::size_t next_nonescape_arg_i(std::size_t next_i = 0) const
-    { 
-        for(std::size_t i = next_i; i != arg_tokens_.size(); i++) 
+    {
+        for(std::size_t i = next_i; i != arg_tokens_.size(); i++)
         {
             if(arg_tokens_.at(i).symbol != Symbol::Esc())
             {
@@ -59,13 +65,11 @@ class ArgParser
         return arg_tokens_.at(i);
     }
 
+    std::vector<ArgToken> arg_tokens() const { return arg_tokens_; }
     std::vector<ArgToken>::iterator begin() { return arg_tokens_.begin(); }
     std::vector<ArgToken>::iterator end() { return arg_tokens_.end(); }
-
     std::vector<ArgToken>::const_iterator begin() const { return arg_tokens_.begin(); }
     std::vector<ArgToken>::const_iterator end() const { return arg_tokens_.end(); }
-
-    std::vector<ArgToken> arg_tokens() const { return arg_tokens_; }
 
 private:
     cstr msg_;
