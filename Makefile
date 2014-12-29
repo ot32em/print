@@ -39,6 +39,11 @@ utest_only: test_env
 	@$(TEST_CC) $(TEST_INCLUDE) $(UTEST_SRC) -o $(TEST_BIN_PATH)
 	@./$(TEST_BIN_PATH)
 
+compile_test:
+	@$(TEST_CC) $(TEST_INCLUDE) $(TEST_SRC_DIR)/compile_error/printErrorTest.cpp \
+		&& echo "Failure: printErrorTest.cpp should compile error." \
+		|| :
+
 test_env:
 	@mkdir -p $(TEST_BIN_DIR)
 
