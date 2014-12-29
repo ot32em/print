@@ -2,6 +2,10 @@
 #include "cstr.h"
 #include "cargseq.h"
 #include "ArgType.h"
+#include "make_str.h"
+#include <vector>
+#include <cassert>
+#include <algorithm>
 
 class ArgParser
 {public:
@@ -30,7 +34,13 @@ class ArgParser
 				float_seq, Symbol::Float(),
 				escape_seq, Symbol::Esc()
 			);
-            assert(arg_tokens_[i].symbol != Symbol::Unknown() && "Detected unknown symbol when ArgParser parsing.");
+            
+            if(arg_tokens_[i].symbol == Symbol::Unknown())
+            {
+                std::cerr << "\nAssertion failure! " << make_str("msg: ", msg_.str(), ", i: ", i, ", tokens_count: ", arg_tokens_.size()) << std::endl;
+
+                assert(!"Detected unknown symbol when ArgParser parsing.");
+            }
             arg_tokens_[i].pos = pos_of_nth_arg(msg_, i);
         }
     }
